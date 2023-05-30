@@ -14,9 +14,9 @@
 
 
 
-	@foreach ($data['action'] as $key => $data['action'] )
-    @if(!empty(config('dz.public.pagelevel.css.'.$data['action'])))
-    @foreach(config('dz.public.pagelevel.css.'.$data['action']) as $style)
+	@foreach ($data['action'] as $key => $action )
+    @if(!empty(config('dz.public.pagelevel.css.'.$action)))
+    @foreach(config('dz.public.pagelevel.css.'.$action) as $style)
     <link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
     @endforeach
     @endif

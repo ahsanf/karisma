@@ -5,11 +5,13 @@
 @endif
 
 
-@if(!empty(config('dz.public.pagelevel.js.'.$data['action'])))
-@foreach(config('dz.public.pagelevel.js.'.$data['action']) as $script)
+@foreach ($data['action'] as $key => $action)
+@if(!empty(config('dz.public.pagelevel.js.'.$action)))
+@foreach(config('dz.public.pagelevel.js.'.$action) as $script)
 <script src="{{ asset($script) }}" type="text/javascript"></script>
 @endforeach
 @endif
+@endforeach
 
 
 <script>
