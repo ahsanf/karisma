@@ -23,8 +23,8 @@
         <div class="card-body">
           <div id="smartwizard" class="form-wizard order-create">
             <ul class="nav nav-wizard">
-              <li><a class="nav-link" href="#wizard_Service"> 
-                <span>1</span> 
+              <li><a class="nav-link" href="#wizard_Service">
+                <span>1</span>
               </a></li>
               <li><a class="nav-link" href="#wizard_Time">
                 <span>2</span>
@@ -224,7 +224,7 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <div class="row">
                   <div class="col-12">
                     <div class="skip-email text-center">

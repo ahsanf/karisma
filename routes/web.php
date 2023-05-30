@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\EventWebController;
+use App\Http\Controllers\Misc\MiscWebController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -91,4 +94,37 @@ Route::get('/ui-typography', 'App\Http\Controllers\GymoveadminController@ui_typo
 Route::get('/widget-basic', 'App\Http\Controllers\GymoveadminController@widget_basic');
 
 
+Route::group([
+    'prefix' => 'admin/auth'
+], function(){
+    Auth::routes();
+});
 
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['role:admin'],
+    'as' => 'admin.'
+], function () {
+    //Dashboard
+    Route::get('dashboard', [DashboardWebController::class, 'index'])->name('dashboard.index');
+    Route::group([
+        'prefix' => 'event',
+        'as' => 'event.'
+    ], function (){
+        Route::get('/', [EventWebController::class, 'index'])->name('index');
+        Route::post('/', [EventWebController::class, 'store'])->name('store');
+        Route::get('/create', [EventWebController::class, 'create'])->name('create');
+        Route::put('/{event}/update', [EventWebController::class, 'update'])->name('update');
+        Route::get('/{event}/edit', [EventWebController::class, 'edit'])->name('edit');
+        Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
+    });
+
+
+});
+
+Route::group([
+    'prefix' => 'misc',
+    'as' => 'misc.'
+], function () {
+    Route::get('/{tag_id}/member', [MiscWebController::class, 'getMemberByTag'])->name('member-by-tag');
+});
