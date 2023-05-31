@@ -38,14 +38,15 @@
                                 <span class="badge light badge-warning">Member Pilihan</span>
                                 @endif
                             <td>
-                                <div class="dropdown ml-auto text-center">
-                                    <div class="btn-link" data-toggle="dropdown">
-                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
-                                    </div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Hapus</a>
-                                    </div>
+                                <div class="row d-flex justify-content-center">
+                                    <span data-toggle="tooltip" title="Edit">
+                                        <button class="btn btn-warning shadow btn-xs sharp mr-1">
+                                            <i class="fa-solid fa-pencil" style="color: white"></i></button>
+                                    </span>
+
+                                    <span data-toggle="tooltip" title="Hapus">
+                                        <button onclick="sweetConfirm(`event/{{ $item['id'] }}/delete`, 'Event')" class="btn btn-danger shadow btn-xs sharp mr-1"><i class="fas fa-trash"></i></button>
+                                    </span>
                                 </div>
                             </td>
                         </tr>
