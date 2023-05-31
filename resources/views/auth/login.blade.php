@@ -58,7 +58,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn mr-2 btn-primary btn-block">Authenticate as Admin</button>
+                                <button type="submit" class="btn mr-2 btn-primary btn-block">Masuk ke Sistem</button>
 
                             </div>
 

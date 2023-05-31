@@ -22,7 +22,7 @@ class EventWebController extends Controller
         $data['events']      = Event::get();
         $data['breadcrumbs'] = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Daftar Acara']]);
 
-        return view('event.index', compact('data'));
+        return view('admin.event.index', compact('data'));
     }
 
 
@@ -34,7 +34,7 @@ class EventWebController extends Controller
         $data['breadcrumbs']    = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Tambah Acara']]);
         $data['members']        = Member::get();
         $data['tags']           = Tag::get();
-        return view('event.create', compact('data'));
+        return view('admin.event.create', compact('data'));
 
     }
 

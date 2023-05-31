@@ -12,30 +12,24 @@ Sidebar start
     <li><a class="ai-icon" href="{{ route('admin.event.index') }}" aria-expanded="false">
 
         <i class="flaticon-381-blueprint"></i>
-
         <span class="nav-text">Acara</span>
     </a>
-    {{-- <ul aria-expanded="false">
-        <li><a href="{{ route('admin.event.index') }}">All Icons</a></li>
-        <li><a href="{{ route('admin.icon.by-category') }}">By Category</a></li>
-        <li><a href="{{ route('admin.icon.by-style') }}">By Style</a></li>
-
-    </ul> --}}
     </li>
+
     <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
         <i class="flaticon-381-list-1"></i>
         <span class="nav-text">Keuangan</span>
     </a>
     </li>
 
-    <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
+    <li><a class="ai-icon" href="{{ route('admin.member.index') }}" aria-expanded="false">
         <i class="flaticon-381-user-9"></i>
         <span class="nav-text">Member</span>
     </a>
 
     </li>
 
-    <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
+    <li><a class="ai-icon" href="{{ route('admin.tag.index') }}" aria-expanded="false">
         <i class="flaticon-381-price-tag"></i>
         <span class="nav-text">Tag</span>
     </a>

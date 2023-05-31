@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardWebController;
 use App\Http\Controllers\EventWebController;
+use App\Http\Controllers\MemberWebController;
 use App\Http\Controllers\Misc\MiscWebController;
+use App\Http\Controllers\TagWebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -107,6 +110,8 @@ Route::group([
 ], function () {
     //Dashboard
     Route::get('dashboard', [DashboardWebController::class, 'index'])->name('dashboard.index');
+
+    //Event
     Route::group([
         'prefix' => 'event',
         'as' => 'event.'
@@ -117,6 +122,28 @@ Route::group([
         Route::put('/{event}/update', [EventWebController::class, 'update'])->name('update');
         Route::get('/{event}/edit', [EventWebController::class, 'edit'])->name('edit');
         Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
+    });
+
+    //Member
+    Route::group([
+        'prefix' => 'member',
+        'as' => 'member.'
+    ], function(){
+        Route::get('/', [MemberWebController::class, 'index'])->name('index');
+        Route::post('/', [MemberWebController::class, 'store'])->name('store');
+        Route::put('/{member}/update', [MemberWebController::class, 'update'])->name('update');
+        Route::post('/{member}/delete', [MemberWebController::class, 'destroy'])->name('destroy');
+    });
+
+    //Tag
+    Route::group([
+        'prefix' => 'tag',
+        'as' => 'tag.'
+    ], function(){
+        Route::get('/', [TagWebController::class, 'index'])->name('index');
+        Route::post('/', [TagWebController::class, 'store'])->name('store');
+        Route::put('/{tag}/update', [TagWebController::class, 'update'])->name('update');
+        Route::post('/{tag}/delete', [TagWebController::class, 'destroy'])->name('destroy');
     });
 
 

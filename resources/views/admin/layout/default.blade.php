@@ -7,25 +7,25 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('dz.name') }} | @yield('title', $data['page_title'] ?? '')</title>
-	
+
 	<meta name="description" content="@yield('page_description', $data['page_description'] ?? '')"/>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
-	
+
 	@foreach ($data['action'] as $key => $action )
-        @if(!empty(config('dz.public.pagelevel.css.'.$action))) 
+        @if(!empty(config('dz.public.pagelevel.css.'.$action)))
             @foreach(config('dz.public.pagelevel.css.'.$action) as $style)
                     <link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
             @endforeach
-        @endif	
+        @endif
     @endforeach
-	
+
 	{{-- Global Theme Styles (used by all pages) --}}
-	@if(!empty(config('dz.public.global.css'))) 
+	@if(!empty(config('dz.public.global.css')))
 		@foreach(config('dz.public.global.css') as $style)
 			<link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 		@endforeach
-	@endif	
+	@endif
 
     @if (!empty(config('dz.public.pagelevel.css.uc_toastr')))
         @foreach (config('dz.public.pagelevel.css.uc_toastr') as $style)
@@ -61,7 +61,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="{!! url('/index'); !!}" class="brand-logo">
+            <a href="{{ route('admin.dashboard.index') }}" class="brand-logo">
 			@if(!empty($data['logo']))
 				<img class="logo-abbr" src="{{ asset($data['logo']) }}" alt="">
 			@else
@@ -73,7 +73,7 @@
 			@else
                 <img class="logo-compact" src="{{ asset('images/logo-text.svg') }}" alt="">
                 <img class="brand-title" src="{{ asset('images/logo-text.svg') }}" alt="">
-			@endif	
+			@endif
             </a>
 
             <div class="nav-control">
@@ -89,10 +89,10 @@
         <!--**********************************
             Header start
         ***********************************-->
-        
+
 		@include('admin.elements.header')
-		
-		
+
+
         <!--**********************************
             Header end ti-comment-alt
         ***********************************-->
@@ -105,8 +105,8 @@
             Sidebar end
         ***********************************-->
 
-		
-		
+
+
         <!--**********************************
             Content body start
         ***********************************-->
@@ -122,9 +122,9 @@
         <!--**********************************
             Footer start
         ***********************************-->
-        
+
 		{{-- @include('elements.footer') --}}
-		
+
         <!--**********************************
             Footer end
         ***********************************-->
