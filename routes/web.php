@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardWebController;
 use App\Http\Controllers\EventWebController;
+use App\Http\Controllers\FinancialWebController;
 use App\Http\Controllers\MemberWebController;
 use App\Http\Controllers\Misc\MiscWebController;
 use App\Http\Controllers\TagWebController;
@@ -19,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 
 Route::get('/', 'App\Http\Controllers\GymoveadminController@dashboard_1');
@@ -146,6 +147,17 @@ Route::group([
         Route::post('/{tag}/delete', [TagWebController::class, 'destroy'])->name('destroy');
     });
 
+    //Finance
+    Route::group([
+        'prefix' => 'finance',
+        'as' => 'finance.'
+    ], function(){
+        Route::get('/', [FinancialWebController::class, 'index'])->name('index');
+        Route::post('/', [FinancialWebController::class, 'store'])->name('store');
+        Route::put('/{finance}/update', [FinancialWebController::class, 'update'])->name('update');
+        Route::post('/{finance}/delete', [FinancialWebController::class, 'destroy'])->name('destroy');
+    });
+
 
 });
 
@@ -154,4 +166,5 @@ Route::group([
     'as' => 'misc.'
 ], function () {
     Route::get('/{tag_id}/member', [MiscWebController::class, 'getMemberByTag'])->name('member-by-tag');
+    Route::get('/{finance_id}/image', [MiscWebController::class, 'getImage'])->name('image');
 });

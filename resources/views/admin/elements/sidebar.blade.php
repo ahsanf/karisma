@@ -16,7 +16,7 @@ Sidebar start
     </a>
     </li>
 
-    <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
+    <li><a class="ai-icon" href="{{ route('admin.finance.index') }}" aria-expanded="false">
         <i class="flaticon-381-list-1"></i>
         <span class="nav-text">Keuangan</span>
     </a>
