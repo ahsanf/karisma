@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "laravolt/avatar": "^5.0",
+        "netflie/laravel-notification-whatsapp": "^1.1",
         "spatie/laravel-permission": "^5.10",
         "timwassenburg/laravel-pivot-table-generator": "^1.0"
     },
