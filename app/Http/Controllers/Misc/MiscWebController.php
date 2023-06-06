@@ -28,4 +28,22 @@ class MiscWebController extends Controller
 
         return response()->json(['data' => $base64]);
     }
+
+    public function getWebhook(Request $request)
+    {
+        if($request->hub_mode == 'subsribe' &&  $request->hub_verify_token == 'KarismaWA'){
+            return response()->json($request->hub_challenge);
+        }
+        return response()->json('Error, wrong validation token', 400);
+    }
+
+    public function postWebhook(Request $request)
+    {
+        try {
+            return response()->json('Incoming webhook: '.$request->body() , 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 400);
+        }
+
+    }
 }
