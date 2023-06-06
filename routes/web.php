@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect('/admin/auth/login');
 });
 
 
@@ -169,5 +169,5 @@ Route::group([
     Route::get('/{finance_id}/image', [MiscWebController::class, 'getImage'])->name('image');
 });
 
-Route::get('/webhook', [MiscWebController::class, 'getWebhook'])->name('webhook');
-Route::post('/webhook', [MiscWebController::class, 'postWebhook'])->name('webhook');
+Route::get('/webhook', [MiscWebController::class, 'getWebhook'])->name('getWebhook');
+Route::post('/webhook', [MiscWebController::class, 'postWebhook'])->name('postWebhook');
