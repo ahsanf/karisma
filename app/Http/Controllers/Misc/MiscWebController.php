@@ -31,11 +31,17 @@ class MiscWebController extends Controller
 
     public function getWebhook(Request $request)
     {
-        $token = env('WHATSAPP_TOKEN');
-        if($request->hub_mode == 'subsribe' &&  $request->hub_verify_token == $token){
-            return response()->json($request->hub_challenge);
+        $token = env('VERIFY_TOKEN');
+        $data['hub_mode'] = $request->hub_mode;
+        $data['hub_verify_token'] = $request->hub_verify_token;
+        $data['hub_challenge'] = $request->hub_challenge;
+
+        if($data['hub_verify_token'] == $token){
+            return response()->json($data['hub_challenge']);
+        } else {
+            return response()->json('Error, wrong validation token', 400);
         }
-        return response()->json('Error, wrong validation token', 400);
+
     }
 
     public function postWebhook(Request $request)
