@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/', 'App\Http\Controllers\GymoveadminController@dashboard_1');
+// Route::get('/', 'App\Http\Controllers\GymoveadminController@dashboard_1');
 Route::get('/index', 'App\Http\Controllers\GymoveadminController@dashboard_1');
 Route::post('/featured-menu-list', 'App\Http\Controllers\GymoveadminController@featured_menu_list');
 Route::get('/workout-statistic', 'App\Http\Controllers\GymoveadminController@workout_statistic');
@@ -167,4 +167,6 @@ Route::group([
 ], function () {
     Route::get('/{tag_id}/member', [MiscWebController::class, 'getMemberByTag'])->name('member-by-tag');
     Route::get('/{finance_id}/image', [MiscWebController::class, 'getImage'])->name('image');
+    Route::get('/webhook', [MiscWebController::class, 'getWebhook'])->name('webhook');
+    Route::post('/webhook', [MiscWebController::class, 'postWebhook'])->name('webhook');
 });
