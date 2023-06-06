@@ -171,3 +171,6 @@ Route::group([
 
 Route::get('/webhook', [MiscWebController::class, 'getWebhook'])->name('getWebhook');
 Route::post('/webhook', [MiscWebController::class, 'postWebhook'])->name('postWebhook');
+Route::get('/privacy-policy', function(){
+    return view('page.privacy-policy');
+})->name('privacy-policy');
