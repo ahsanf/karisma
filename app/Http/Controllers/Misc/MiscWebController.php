@@ -31,7 +31,8 @@ class MiscWebController extends Controller
 
     public function getWebhook(Request $request)
     {
-        if($request->hub_mode == 'subsribe' &&  $request->hub_verify_token == 'KarismaWA'){
+        $token = env('WHATSAPP_TOKEN');
+        if($request->hub_mode == 'subsribe' &&  $request->hub_verify_token == $token){
             return response()->json($request->hub_challenge);
         }
         return response()->json('Error, wrong validation token', 400);
