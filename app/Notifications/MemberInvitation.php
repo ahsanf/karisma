@@ -38,13 +38,12 @@ class MemberInvitation extends Notification
     public function toWhatsapp($notifiable)
     {
         return WhatsAppTemplate::create()
-            ->name('sample_movie_ticket_confirmation') // Name of your configured template
-            ->header(Component::image('https://lumiere-a.akamaihd.net/v1/images/image_c671e2ee.jpeg'))
-            ->body(Component::text('Star Wars'))
-            ->body(Component::dateTime(new \DateTimeImmutable))
-            ->body(Component::text('Star Wars'))
-            ->body(Component::text('5'))
-            ->to('6281359888622');
+            ->name('hello_world') // Name of your configured template
+            // ->body(Component::text('Star Wars'))
+            // ->body(Component::dateTime(new \DateTimeImmutable))
+            // ->body(Component::text('Amin Elek'))
+            // ->body(Component::text('5'))
+            ->to('6285713147410');
     }
 
     /**
