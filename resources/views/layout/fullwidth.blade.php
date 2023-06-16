@@ -23,6 +23,7 @@
         </div>
     </div>
 @include('elements.footer-scripts')
+{!! Toastr::message() !!}
 </body>
 
 </html>

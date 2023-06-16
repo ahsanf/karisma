@@ -13,15 +13,25 @@ use NotificationChannels\WhatsApp\WhatsAppTemplate;
 class MemberInvitation extends Notification
 {
     use Queueable;
-
+    public $data;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+
+        $this->data = [
+            'phone_number' => $data['phone_number'],
+            'member_name' => $data['member_name'],
+            'day_name' => $data['day_name'],
+            'day_month_year' => $data['day_month_year'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'place' => $data['place'],
+            'event_name' => $data['event_name'],
+        ];
     }
 
     /**
@@ -37,13 +47,16 @@ class MemberInvitation extends Notification
 
     public function toWhatsapp($notifiable)
     {
-        return WhatsAppTemplate::create()
-            ->name('hello_world') // Name of your configured template
-            // ->body(Component::text('Star Wars'))
-            // ->body(Component::dateTime(new \DateTimeImmutable))
-            // ->body(Component::text('Amin Elek'))
-            // ->body(Component::text('5'))
-            ->to('6285713147410');
+        return WhatsAppTemplate::create($this->data['phone_number'],'Karisma','id')
+            ->name('invitation')
+            ->body(Component::text($this->data['member_name'])) // member_name
+            ->body(Component::text($this->data['day_name'])) // day_name
+            ->body(Component::text($this->data['day_month_year'])) // day_month_year
+            ->body(Component::text($this->data['start_date'])) // start_date
+            ->body(Component::text($this->data['end_date'])) // end_date
+            ->body(Component::text($this->data['place'])) // place
+            ->body(Component::text($this->data['event_name'])) // event_name
+            ->to($this->data['phone_number']);
     }
 
     /**

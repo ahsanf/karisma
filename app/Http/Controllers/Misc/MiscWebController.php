@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Misc;
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Financial;
+use App\Models\Member;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -53,4 +56,51 @@ class MiscWebController extends Controller
         }
 
     }
+
+    public function invitation($key)
+    {
+        $data['action'] = ['dashboard_1'];
+        $data['page_title'] = 'Konfirmasi Kehadiran';
+        $data['key'] = $key;
+        $decrypt     = $this->decryptKey($key);
+        $data['event'] = Event::find($decrypt['event_id']);
+        $data['member'] = Member::find($decrypt['member_id']);
+        $data['date_string'] = DateHelper::getDateString($data['event']->date);
+        $data['presence_status'] = $data['member']->events()->where('member_id', $decrypt['member_id'])->first()->pivot->status;
+
+        return view('invitation.index', compact('data'));
+    }
+
+    public function storeInvitation(Request $request, $key)
+    {
+        try {
+            $data['action'] = ['dashboard_1'];
+            $data['page_title'] = 'Konfirmasi Kehadiran';
+            $decrypt     = $this->decryptKey($key);
+            $event       = Event::find($decrypt['event_id']);
+            $event->members()->updateExistingPivot($decrypt['member_id'], [
+                'presence' => $request->presence,
+                'status' => 1
+            ]);
+
+            return view('invitation.success', compact('data'));
+        } catch (\Throwable $th) {
+            return view('invitation.success', compact('data'));
+        }
+
+    }
+
+    public function decryptKey($key)
+    {
+        //KEY = member_id:event_id
+        $decrypt_key         = Crypt::decryptString($key);
+        $data_decrypt        = explode(':', $decrypt_key);
+        $data['member_id']   = $data_decrypt[0];
+        $data['event_id']    = $data_decrypt[1];
+
+        return $data;
+
+    }
+
+
 }

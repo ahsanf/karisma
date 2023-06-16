@@ -38,7 +38,9 @@
         },
         "files":[
             "app/Helper/RedirectHelper.php",
-            "app/Helper/LayoutHelper.php"
+            "app/Helper/LayoutHelper.php",
+            "app/Helper/FileHelper.php",
+            "app/Helper/DateHelper.php"
         ]
     },
     "autoload-dev": {

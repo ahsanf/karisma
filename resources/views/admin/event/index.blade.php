@@ -39,6 +39,17 @@
                                 @endif
                             <td>
                                 <div class="row d-flex justify-content-center">
+
+                                    <span data-toggle="tooltip" title="Kirim Undangan">
+                                        <form action="{{ route('admin.event.publish', ['event' => $item['id']]) }}" method="post">
+                                        @csrf
+                                            <button class="btn btn-success shadow btn-xs sharp mr-1" type="submit">
+                                                <i class="fa-solid fa-paper-plane" style="color: white"></i>
+                                            </button>
+                                        </form>
+
+                                    </span>
+
                                     <span data-toggle="tooltip" title="Edit">
                                         <button class="btn btn-warning shadow btn-xs sharp mr-1">
                                             <i class="fa-solid fa-pencil" style="color: white"></i></button>

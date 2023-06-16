@@ -49,6 +49,7 @@ Sidebar start
         <span class="nav-text">Lain lain</span>
     </a>
     <ul aria-expanded="false">
+        <li><a href="{{ route('admin.financial-category.index') }}">Kategori Finansial</a></li>
         <li><a href="javascript:void(0)">Admin Management</a></li>
         {{-- <li><a href="javascript:void(0)" class="has-arrow" aria-expanded="false">Trash</a>
         <ul aria-expanded="false">
