@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Member extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'members';
 
@@ -19,7 +20,7 @@ class Member extends Model
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_member', 'member_id', 'event_id');
+        return $this->belongsToMany(Event::class, 'event_member', 'member_id', 'event_id')->withPivot('presence', 'status');
     }
 
     public function tag()

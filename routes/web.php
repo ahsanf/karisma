@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardWebController;
 use App\Http\Controllers\EventWebController;
+use App\Http\Controllers\FinancialCategoryWebController;
 use App\Http\Controllers\FinancialWebController;
 use App\Http\Controllers\MemberWebController;
 use App\Http\Controllers\Misc\MiscWebController;
@@ -123,6 +124,7 @@ Route::group([
         Route::put('/{event}/update', [EventWebController::class, 'update'])->name('update');
         Route::get('/{event}/edit', [EventWebController::class, 'edit'])->name('edit');
         Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
+        Route::post('/{event}/publish', [EventWebController::class, 'publish'])->name('publish');
     });
 
     //Member
@@ -158,6 +160,16 @@ Route::group([
         Route::post('/{finance}/delete', [FinancialWebController::class, 'destroy'])->name('destroy');
     });
 
+    //Financial Category
+    Route::group([
+        'prefix' => 'financial-category',
+        'as' => 'financial-category.'
+    ], function(){
+        Route::get('/', [FinancialCategoryWebController::class, 'index'])->name('index');
+        Route::post('/', [FinancialCategoryWebController::class, 'store'])->name('store');
+        Route::put('/{financial_category}/update', [FinancialCategoryWebController::class, 'update'])->name('update');
+        Route::post('/{financial_category}/delete', [FinancialCategoryWebController::class, 'destroy'])->name('destroy');
+    });
 
 });
 
@@ -174,3 +186,6 @@ Route::post('/webhook', [MiscWebController::class, 'postWebhook'])->name('postWe
 Route::get('/privacy-policy', function(){
     return view('page.privacy-policy');
 })->name('privacy-policy');
+
+Route::get('/invitation/{key}', [MiscWebController::class, 'invitation'])->name('invitation');
+Route::post('/invitation/{key}', [MiscWebController::class, 'storeInvitation'])->name('storeInvitation');
