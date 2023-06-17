@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminWebController;
 use App\Http\Controllers\DashboardWebController;
 use App\Http\Controllers\EventWebController;
 use App\Http\Controllers\FinancialCategoryWebController;
@@ -169,6 +170,17 @@ Route::group([
         Route::post('/', [FinancialCategoryWebController::class, 'store'])->name('store');
         Route::put('/{financial_category}/update', [FinancialCategoryWebController::class, 'update'])->name('update');
         Route::post('/{financial_category}/delete', [FinancialCategoryWebController::class, 'destroy'])->name('destroy');
+    });
+
+    //Admin
+    Route::group([
+        'prefix' => 'user',
+        'as' => 'user.'
+    ], function(){
+        Route::get('/', [AdminWebController::class, 'index'])->name('index');
+        Route::post('/', [AdminWebController::class, 'store'])->name('store');
+        Route::put('/{admin}/update', [AdminWebController::class, 'update'])->name('update');
+        Route::post('/{admin}/destroy', [AdminWebController::class, 'destroy'])->name('destroy');
     });
 
 });

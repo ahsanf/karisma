@@ -36,13 +36,13 @@ Sidebar start
 
     </li>
 
-
+{{--
     <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
         <i class="flaticon-381-networking"></i>
         <span class="nav-text">Inventaris</span>
     </a>
 
-    </li>
+    </li> --}}
 
     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
         <i class="flaticon-381-settings-2"></i>
@@ -50,24 +50,18 @@ Sidebar start
     </a>
     <ul aria-expanded="false">
         <li><a href="{{ route('admin.financial-category.index') }}">Kategori Finansial</a></li>
-        <li><a href="javascript:void(0)">Admin Management</a></li>
-        {{-- <li><a href="javascript:void(0)" class="has-arrow" aria-expanded="false">Trash</a>
-        <ul aria-expanded="false">
-            <li><a href="{{ route('admin.trash.index', ['type' => 'icon']) }}">Icon</a></li>
-            <li><a href="{{ route('admin.trash.index', ['type' => 'category']) }}">Category</a></li>
-            <li><a href="{{ route('admin.trash.index', ['type' => 'style']) }}">Style</a></li>
-            <li><a href="{{ route('admin.trash.index', ['type' => 'hashtag']) }}">Hashtag</a></li>
-        </ul>
-        </li> --}}
+        <li><a href="{{ route('admin.user.index') }}">Manajemen Admin</a></li>
     </ul>
     </li>
 
 
     </ul>
-    {{-- <div class="add-menu-sidebar">
-    <img src="{{ asset('images/calendar.png') }}" alt="" class="mr-3">
-    <p class="	font-w500 mb-0">Create Workout Plan Now</p>
-    </div> --}}
+    <div class="add-menu-sidebar">
+        <a href="{{ route('admin.event.create') }}" class="d-flex">
+            <img src="{{ asset('images/calendar.png') }}" alt="" class="mr-3">
+            <p class="font-w500 mb-0">Buat Acara</p>
+        </a>
+    </div>
     <div class="copyright">
     <p><strong>Karisma Admin Dashboard</strong> © {{ now()->year }} All Rights Reserved</p>
     <p>Made with 💙 by アシャン</p>

@@ -23,7 +23,7 @@ class EventWebController extends Controller
         $data['card_title']  = 'Acara';
         $data['events']      = Event::with('notification')->get();
         $data['breadcrumbs'] = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Daftar Acara']]);
-        // dd($data);
+
         return view('admin.event.index', compact('data'));
     }
 
@@ -144,8 +144,4 @@ class EventWebController extends Controller
 
     }
 
-    public function sendInvitation($member, $event)
-    {
-
-    }
 }
