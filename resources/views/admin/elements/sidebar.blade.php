@@ -4,11 +4,11 @@ Sidebar start
 <div class="deznav">
 <div class="deznav-scroll">
     <ul class="metismenu" id="menu">
-    <li><a class="ai-icon" href="{{ route('admin.dashboard.index') }}" aria-expanded="false">
+    {{-- <li><a class="ai-icon" href="{{ route('admin.dashboard.index') }}" aria-expanded="false">
         <i class="flaticon-381-pad"></i>
         <span class="nav-text">Dashboard</span>
     </a>
-    </li>
+    </li> --}}
     <li><a class="ai-icon" href="{{ route('admin.event.index') }}" aria-expanded="false">
 
         <i class="flaticon-381-blueprint"></i>
@@ -22,6 +22,12 @@ Sidebar start
     </a>
     </li>
 
+    <li><a class="ai-icon" href="{{ route('admin.note.index') }}" aria-expanded="false">
+        <i class="flaticon-381-networking"></i>
+        <span class="nav-text">Catatan</span>
+    </a>
+
+    </li>
     <li><a class="ai-icon" href="{{ route('admin.member.index') }}" aria-expanded="false">
         <i class="flaticon-381-user-9"></i>
         <span class="nav-text">Member</span>
@@ -36,13 +42,7 @@ Sidebar start
 
     </li>
 
-{{--
-    <li><a class="ai-icon" href="javascript:void(0)" aria-expanded="false">
-        <i class="flaticon-381-networking"></i>
-        <span class="nav-text">Inventaris</span>
-    </a>
 
-    </li> --}}
 
     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
         <i class="flaticon-381-settings-2"></i>
@@ -57,7 +57,7 @@ Sidebar start
 
     </ul>
     <div class="add-menu-sidebar">
-        <a href="{{ route('admin.event.create') }}" class="d-flex">
+        <a href="{{ route('admin.event.create') }}" class="d-flex align-items-center">
             <img src="{{ asset('images/calendar.png') }}" alt="" class="mr-3">
             <p class="font-w500 mb-0">Buat Acara</p>
         </a>

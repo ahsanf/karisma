@@ -49,9 +49,10 @@ class FinancialWebController extends Controller
         }
     }
 
-    public function destroy(Financial $financial)
+    public function destroy($id)
     {
         try {
+            $financial = Financial::findOrFail($id);
             $financial->delete();
 
             return R::redirectRouteStatus('admin.finance.index', 'success', 'Keuangan berhasil dihapus');

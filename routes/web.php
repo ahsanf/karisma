@@ -7,6 +7,7 @@ use App\Http\Controllers\FinancialCategoryWebController;
 use App\Http\Controllers\FinancialWebController;
 use App\Http\Controllers\MemberWebController;
 use App\Http\Controllers\Misc\MiscWebController;
+use App\Http\Controllers\NoteWebController;
 use App\Http\Controllers\TagWebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -181,6 +182,20 @@ Route::group([
         Route::post('/', [AdminWebController::class, 'store'])->name('store');
         Route::put('/{admin}/update', [AdminWebController::class, 'update'])->name('update');
         Route::post('/{admin}/destroy', [AdminWebController::class, 'destroy'])->name('destroy');
+    });
+
+    //Note
+    Route::group([
+        'prefix' => 'note',
+        'as' => 'note.'
+    ], function(){
+        Route::get('/', [NoteWebController::class, 'index'])->name('index');
+        Route::post('/{id}/store', [NoteWebController::class, 'store'])->name('store');
+        Route::get('/create', [NoteWebController::class, 'create'])->name('create');
+        Route::get('/{note}/edit', [NoteWebController::class, 'edit'])->name('edit');
+        Route::put('/{note}/update', [NoteWebController::class, 'update'])->name('update');
+        Route::post('/{note}/delete', [NoteWebController::class, 'destroy'])->name('destroy');
+        Route::post('/autosave', [NoteWebController::class, 'autosave'])->name('autosave');
     });
 
 });
