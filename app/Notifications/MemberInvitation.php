@@ -31,6 +31,8 @@ class MemberInvitation extends Notification
             'end_date' => $data['end_date'],
             'place' => $data['place'],
             'event_name' => $data['event_name'],
+            'notes' => $data['notes'],
+            'btn_link' => $data['btn_link']
         ];
     }
 
@@ -56,6 +58,8 @@ class MemberInvitation extends Notification
             ->body(Component::text($this->data['end_date'])) // end_date
             ->body(Component::text($this->data['place'])) // place
             ->body(Component::text($this->data['event_name'])) // event_name
+            ->body(Component::text($this->data['notes'])) // notes
+            ->buttons(Component::urlButton([$this->data['btn_link']]))
             ->to($this->data['phone_number']);
     }
 
@@ -68,7 +72,7 @@ class MemberInvitation extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+
         ];
     }
 }

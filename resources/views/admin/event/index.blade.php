@@ -56,7 +56,7 @@
                                     </span>
 
                                     <span data-toggle="tooltip" title="Hapus">
-                                        <button onclick="sweetConfirm(`event/{{ $item['id'] }}/delete`, 'Event')" class="btn btn-danger shadow btn-xs sharp mr-1"><i class="fas fa-trash"></i></button>
+                                        <button onclick="sweetConfirm(`event/{{ $item['id'] }}/delete`, 'Acara')" class="btn btn-danger shadow btn-xs sharp mr-1"><i class="fas fa-trash"></i></button>
                                     </span>
                                 </div>
                             </td>

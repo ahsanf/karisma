@@ -12,6 +12,7 @@ use App\Models\Tag;
 use App\Notifications\MemberInvitation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class EventWebController extends Controller
 {
@@ -48,7 +49,7 @@ class EventWebController extends Controller
 
             $event = Event::create($data);
 
-            if(!$request->event_type == Event::EVENT_TYPE_MEMBER){
+            if($request->event_type == Event::EVENT_TYPE_MEMBER){
                 if ($request->has('member_id')) {
                     foreach($request->member_id as $member){
                         $event->members()->attach($member);
@@ -86,9 +87,11 @@ class EventWebController extends Controller
      *
      * @param  int  $id
      */
-    public function destroy(Event $event)
+    public function destroy($id)
     {
+        $event = Event::findOrFail($id);
         $event->members()->detach();
+        $event->notification()->delete();
         $event->delete();
 
         return R::redirectBackStatus('success','Event berhasil dihapus');
@@ -96,6 +99,8 @@ class EventWebController extends Controller
 
     public function publish(Event $event)
     {
+        //example
+        // $data["phone_number"]= "6281359888622"; $data["member_name"]= "Amin"; $data["day_name"]= "Selasa"; $data["day_month_year"]= "20 Juni 2023"; $data["start_date"]= "19=00"; $data["end_date"]= "21=00 WIB"; $data["place"]= "Rumah Bapak Amin"; $data["event_name"]= "Rapat Perobohan Rumah"; $data["notes"]= "Harap membawa iuran minimal Rp. 2000"; $data["btn_link"]= "eyJpdiI6ImZENW50bTNhQ29ycWMrRGd0OWNDNlE9PSIsInZhbHVlIjoiUDc1dzFjNVlMbENGYlI2R0xGT2N4QT09IiwibWFjIjoiNDViMjJlOWM5OGY0NGEzNjg0NzBhZTBiZjU0MGExYmY3ZGI3ZGFkZWNkM2QwNjE0MzFiMmIwMTE5NjNiMDBkOCIsInRhZyI6IiJ9"
         try {
             if($event->event_type == Event::EVENT_TYPE_ALL_MEMBER){
                 $members = Member::get();
@@ -109,6 +114,8 @@ class EventWebController extends Controller
                     $data['end_date']         = DateHelper::formatTime($event->event_end). ' WIB';
                     $data['place']            = $event->event_place;
                     $data['event_name']       = $event->event_name;
+                    $data['notes']            = 'Harap membawa iuran minimal Rp. 2000';
+                    $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
 
                     $member->notify(new MemberInvitation($data));
                 }
@@ -128,6 +135,8 @@ class EventWebController extends Controller
                     $data['end_date']         = DateHelper::formatTime($event->event_end). ' WIB';
                     $data['place']            = $event->event_place;
                     $data['event_name']       = $event->event_name;
+                    $data['notes']            = 'Harap membawa iuran minimal Rp. 2000';
+                    $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
 
                     $member->notify(new MemberInvitation($data));
                 }
