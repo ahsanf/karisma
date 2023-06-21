@@ -19,8 +19,9 @@
                         <thead>
                         <tr>
                             <th width="5%">No</th>
-                            <th>Acara</th>
-                            <th>Tanggal</th>
+                            <th class="text-center">Acara</th>
+                            <th class="text-center">Tanggal</th>
+                            <th class="text-center">Kehadiran</th>
                             <th class="text-center" width="10%">Tipe</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -30,12 +31,19 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['event_name'] }}</td>
-                            <td>{{ $item['event_date'] }}</td>
+                            <td class="text-center">{{ $item['date_string'] }}</td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center">
+                                    <span class="badge light badge-success mr-2">{{ $item['member_present'] }}</span>
+                                    <span class="badge light badge-danger mr-2">{{ $item['member_not_present'] }}</span>
+                                    <span class="badge light badge-secondary">{{ $item['member_no_answer'] }}</span>
+                                </div>
+                            </td>
                             <td class="text-center">
                                 @if($item['event_type'] == 1)
                                 <span class="badge light badge-success">Semua Member</span>
                                 @else
-                                <span class="badge light badge-warning">Member Pilihan</span>
+                                <span class="badge light badge-primary">Member Pilihan</span>
                                 @endif
                             <td>
                                 <div class="row d-flex justify-content-center">
@@ -64,6 +72,15 @@
                         @endforeach
                         </tbody>
                     </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex">
+                        <p>Keterangan:
+                            <span class="badge light badge-success mr-2 ml-2">Hadir</span>
+                            <span class="badge light badge-danger mr-2">Tidak Hadir</span>
+                            <span class="badge light badge-secondary">Tidak Menjawab</span>
+                        </p>
                     </div>
                 </div>
                 </div>
