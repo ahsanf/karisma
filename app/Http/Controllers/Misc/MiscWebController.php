@@ -66,8 +66,8 @@ class MiscWebController extends Controller
         $data['event'] = Event::find($decrypt['event_id']);
         $data['member'] = Member::find($decrypt['member_id']);
         $data['date_string'] = DateHelper::getDateString($data['event']->date);
-        $data['presence_status'] = $data['member']->events()->where('member_id', $decrypt['member_id'])->first()->pivot->presence;
-
+        $data['presence_status'] = $data['member']->events()->where('member_id', $decrypt['member_id'])->where('event_id', $decrypt['event_id'])->first()->pivot->status;
+        
         return view('invitation.index', compact('data'));
     }
 
