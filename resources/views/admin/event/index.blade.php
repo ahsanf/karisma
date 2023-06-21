@@ -79,7 +79,7 @@
                         <p>Keterangan:
                             <span class="badge light badge-success mr-2 ml-2">Hadir</span>
                             <span class="badge light badge-danger mr-2">Tidak Hadir</span>
-                            <span class="badge light badge-secondary">Tidak Menjawab</span>
+                            <span class="badge light badge-secondary">Belum Menjawab</span>
                         </p>
                     </div>
                 </div>
