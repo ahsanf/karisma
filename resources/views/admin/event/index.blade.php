@@ -21,6 +21,7 @@
                             <th width="5%">No</th>
                             <th class="text-center">Acara</th>
                             <th class="text-center">Tanggal</th>
+                            <th class="text-center">Jumlah Undangan</th>
                             <th class="text-center">Kehadiran</th>
                             <th class="text-center" width="10%">Tipe</th>
                             <th class="text-center">Aksi</th>
@@ -32,6 +33,7 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['event_name'] }}</td>
                             <td class="text-center">{{ $item['date_string'] }}</td>
+                            <td class="text-center"><span class="badge light badge-primary">{{ $item['members_count'] }}</span></td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
                                     <span class="badge light badge-success mr-2">{{ $item['member_present'] }}</span>
