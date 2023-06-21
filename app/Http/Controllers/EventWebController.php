@@ -22,9 +22,28 @@ class EventWebController extends Controller
         $data['action']      = ['table_datatable_basic', 'uc_select2'];
         $data['page_title']  = 'Semua Acara';
         $data['card_title']  = 'Acara';
-        $data['events']      = Event::with('notification')->get();
+        $data['events']      = [];
+        $events              = Event::with('notification','members')->withCount('members')->get();
         $data['breadcrumbs'] = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Daftar Acara']]);
 
+        foreach($events as $event){
+            $event['member_present'] = 0;
+            $event['member_not_present'] = 0;
+            $event['member_no_answer'] = 0;
+            $event['date_string'] = $event->dateString($event['event_date']);
+            foreach($event['members'] as $member){
+                if($member->pivot->presence == 1){
+                    $event['member_presence'] = $event['member_presence']+1;
+                }
+                if($member->pivot->presence == 0){
+                    $event['member_not_presence'] = $event['member_not_presence']+1;
+                }
+                if($member->pivot->presence == 2){
+                    $event['member_no_answer'] = $event['member_no_answer']+1;
+                }
+            }
+            $data['events'][] = $event->toArray();
+        }
         return view('admin.event.index', compact('data'));
     }
 
