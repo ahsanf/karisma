@@ -33,10 +33,10 @@ class EventWebController extends Controller
             $event['date_string'] = $event->dateString($event['event_date']);
             foreach($event['members'] as $member){
                 if($member->pivot->presence == 1){
-                    $event['member_presence'] = $event['member_presence']+1;
+                    $event['member_present'] = $event['member_presence']+1;
                 }
                 if($member->pivot->presence == 0){
-                    $event['member_not_presence'] = $event['member_not_presence']+1;
+                    $event['member_not_present'] = $event['member_not_presence']+1;
                 }
                 if($member->pivot->presence == 2){
                     $event['member_no_answer'] = $event['member_no_answer']+1;
