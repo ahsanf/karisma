@@ -133,7 +133,7 @@ class EventWebController extends Controller
                     $data['end_date']         = DateHelper::formatTime($event->event_end). ' WIB';
                     $data['place']            = $event->event_place;
                     $data['event_name']       = $event->event_name;
-                    $data['notes']            = 'Harap membawa iuran minimal Rp. 2000';
+                    $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
 
                     $member->notify(new MemberInvitation($data));
@@ -154,7 +154,7 @@ class EventWebController extends Controller
                     $data['end_date']         = DateHelper::formatTime($event->event_end). ' WIB';
                     $data['place']            = $event->event_place;
                     $data['event_name']       = $event->event_name;
-                    $data['notes']            = 'Harap membawa iuran minimal Rp. 2000';
+                    $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
 
                     $member->notify(new MemberInvitation($data));

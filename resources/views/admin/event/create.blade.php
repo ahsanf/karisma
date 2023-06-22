@@ -66,6 +66,13 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="" class="text-label">Catatan (Opsional)</label>
+                                    <textarea class="form-control" name="event_note" id="" cols="30" rows="10" placeholder="Masukkan Catatan"></textarea>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 <div id="step-2" class="tab-pane" role="tabpanel">

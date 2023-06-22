@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('event_id')->nullable();
             $table->string('note_title');
             $table->date('note_date');
-            $table->longText('note_content');
+            $table->longText('note_content')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0: draft, 1: published');
             $table->timestamps();
         });

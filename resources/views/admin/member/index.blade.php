@@ -45,7 +45,7 @@
                             <td>
                                 <div class="row d-flex justify-content-center">
                                     <span data-toggle="tooltip" title="Edit">
-                                        <button class="btn btn-warning shadow btn-xs sharp mr-1">
+                                        <button class="btn btn-warning shadow btn-xs sharp mr-1" data-toggle="modal" data-target="#editMemberModal-{{ $item['id'] }}">
                                             <i class="fa-solid fa-pencil" style="color: white"></i></button>
                                     </span>
 
@@ -114,12 +114,73 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger light" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+        </div>
+    </div>
+    </div>
+
+@foreach ($data['members'] as $member)
+<div class="modal fade" id="editMemberModal-{{ $member['id'] }}" style="display: none;" aria-modal="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Member</h5>
+            <button type="button" class="close" data-dismiss="modal"><span>×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="single-upload"action="{{ route('admin.member.update', ['member'=>$member]) }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('put')
+                <div class="basic-form">
+                        <div class="form-group">
+                            <label class="text-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap" name="member_name" value="{{ old('member_name', $member['member_name']) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="text-label">No HP</label>
+                            <input type="text" class="form-control" placeholder="Masukkan No HP, contoh: 628121212121" value="{{ old('member_phone', $member['member_phone']) }}" name="member_phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="text-label">Pilih Tag (Opsional)</label>
+                            <select name="tags[]" class="edit-select-tag" multiple="multiple">
+                                <option></option>
+                                @foreach ($data['tags'] as $tag)
+                                <option value="{{ $tag->id }}" @if($member['tag'][0]['id']==$tag->id) selected @endif>{{ $tag->tag_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" class="text-label">Pilih RT (Opsional)</label>
+                            <select class="edit-select-neighboor" name="member_neighborhood">
+                                <option></option>
+                                @php
+                                    $neighborhoods = ['00', '01', '02', '05', '06'];
+                                @endphp
+                                @foreach ( $neighborhoods as $neighborhood )
+                                <option value="{{ $neighborhood }}" @if($member['member_neighborhood'] == $neighborhood) selected @endif>RT {{ $neighborhood }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger light" data-dismiss="modal">Batal</button>
             <button type="submit" class="btn btn-primary">Tambah</button>
         </div>
     </form>
         </div>
     </div>
     </div>
+@endforeach
+
 @endsection
 
 @push('custom_js')
@@ -127,6 +188,7 @@
     $(document).ready(function(){
         $(".select2-search__field").css({"width": "300%","margin-left": "5%"});
         $.fn.modal.Constructor.prototype._enforceFocus = function() {};
+
         $("#multi-select-tag").select2({
             dropdownParent: $('#addMemberModal'),
             placeholder: "Pilih Tag",
@@ -135,6 +197,19 @@
         });
 
         $("#select-neighboor").select2({
+            placeholder: "Pilih RT",
+            tags: true,
+            cache: true
+        });
+
+        $(".edit-select-tag").select2({
+            dropdownParent: $('#addMemberModal'),
+            placeholder: "Pilih Tag",
+            tags: true,
+            cache: true
+        });
+
+        $(".edit-select-neighboor").select2({
             placeholder: "Pilih RT",
             tags: true,
             cache: true

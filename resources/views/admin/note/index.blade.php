@@ -32,7 +32,7 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td class="text-center">{{ $item['note_title'] }}</td>
                             <td class="text-center">{{ $item->dateString($item['note_date']) }}</td>
-                            <td class="text-center">{{ $item['event']['event_name'] ?? '' }}</td>
+                            <td class="text-center">{{ $item['event']['event_name'] ?? '-' }}</td>
                             <td class="text-center">
                                 @if ($item['status'] == 0)
                                     <span class="badge badge-warning light">Draft</span>
