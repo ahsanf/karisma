@@ -22,7 +22,8 @@ class Event extends Model
         'event_day',
         'event_end',
         'event_description',
-        'event_type'
+        'event_type',
+        'event_note'
     ];
 
     public function members()

@@ -50,6 +50,7 @@ class EventRequest extends FormRequest
             'event_place' => 'required|string',
             'event_description' => 'nullable|string',
             'event_type' => 'required|in:1,0',
+            'event_note' => 'nullable|string',
             'member_id' => 'nullable|array',
         ];
     }

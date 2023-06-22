@@ -39,11 +39,10 @@ class MemberWebController extends Controller
         }
     }
 
-    public function update(MemberStoreRequest $request)
+    public function update(MemberStoreRequest $request, Member $member)
     {
         try {
             $data = $request->validated();
-            $member = Member::find($request->id);
             $member->update($data);
             if($request->has('tags')){
                 $member->tag()->sync($request->tags);

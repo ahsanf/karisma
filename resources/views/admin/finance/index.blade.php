@@ -99,7 +99,7 @@
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['financial_name'] }}</td>
                             <td class="text-center">{{ "Rp " . number_format($item['financial_amount'],0,',','.') }}</td>
-                            <td class="text-center">{{ $item['financial_date'] }}</td>
+                            <td class="text-center">{{ $item->dateString($item['financial_date']) }}</td>
                             <td class="text-center">
                                 @if($item['financial_type'] == 'income')
                                 <span class="badge badge-success light">

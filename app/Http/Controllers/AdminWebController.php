@@ -7,6 +7,7 @@ use App\Helper\RedirectHelper;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AdminWebController extends Controller
@@ -31,7 +32,10 @@ class AdminWebController extends Controller
     public function store(UserRequest $request)
     {
         try {
-            $user = User::create($request->validated());
+            $password = Hash::make($request->password);
+            $data = $request->all();
+            $data['password'] = $password;
+            $user = User::create($data);
             $user->assignRole('admin');
             return RedirectHelper::redirectRouteStatus('admin.user.index', 'success', 'User has been created');
         } catch (\Throwable $th) {
