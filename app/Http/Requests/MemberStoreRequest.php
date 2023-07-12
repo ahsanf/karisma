@@ -43,6 +43,7 @@ class MemberStoreRequest extends FormRequest
     {
         return [
             'member_name' => 'required|string',
+            'member_shortname' => 'required|string',
             'member_phone' => 'required|string',
             'member_neighborhood' => 'required|string',
         ];
