@@ -20,6 +20,7 @@
                         <tr>
                             <th width="5%">No</th>
                             <th>Nama</th>
+                            <th>Nama Panggilan</th>
                             <th>No HP</th>
                             <th class="text-center">Tag</th>
                             <th class="text-center" width="10%">RT</th>
@@ -31,6 +32,7 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['member_name'] }}</td>
+                            <td class="text-center">{{ $item['member_shortname'] ?? '-' }}</td>
                             <td>{{ $item['member_phone'] }}</td>
                             <td class="text-center">
                                 <div class="row d-flex justify-content-center">
@@ -79,6 +81,11 @@
                         <div class="form-group">
                             <label class="text-label">Nama Lengkap</label>
                             <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap" name="member_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="text-label">Nama Panggilan</label>
+                            <input type="text" class="form-control" placeholder="Masukkan Nama Panggilan" name="member_shortname" required>
                         </div>
 
                         <div class="form-group">
@@ -137,7 +144,13 @@
                 <div class="basic-form">
                         <div class="form-group">
                             <label class="text-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap" name="member_name" value="{{ old('member_name', $member['member_name']) }}">
+                            <input type="text" class="form-control" placeholder="Masukkan Nama Lengkap" name="member_name" value="{{ old('member_name', $member['member_name']) }}" required>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="text-label">Nama Panggilan</label>
+                            <input type="text" class="form-control" placeholder="Masukkan Nama Panggilan" name="member_shortname"  value="{{ old('member_shortname', $member['member_shortname']) }}" required>
                         </div>
 
                         <div class="form-group">

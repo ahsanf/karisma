@@ -126,7 +126,7 @@ class EventWebController extends Controller
 
                 foreach($members as $member){
                     $data['phone_number']     = $member->member_phone;
-                    $data['member_name']      = $member->member_name;
+                    $data['member_name']      = $member->member_shortname ?? $member->member_name;
                     $data['day_name']         = $event->event_day;
                     $data['day_month_year']   = DateHelper::getDateString($event->event_date);
                     $data['start_date']       = DateHelper::formatTime($event->event_start);
@@ -147,7 +147,7 @@ class EventWebController extends Controller
 
                 foreach($members as $member){
                     $data['phone_number']     = $member->member_phone;
-                    $data['member_name']      = $member->member_name;
+                    $data['member_name']      = $member->member_shortname ?? $member->member_name;
                     $data['day_name']         = $event->event_day;
                     $data['day_month_year']   = DateHelper::getDateString($event->event_date);
                     $data['start_date']       = DateHelper::formatTime($event->event_start);
