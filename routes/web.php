@@ -124,7 +124,13 @@ Route::group([
         Route::post('/', [EventWebController::class, 'store'])->name('store');
         Route::get('/create', [EventWebController::class, 'create'])->name('create');
         Route::put('/{event}/update', [EventWebController::class, 'update'])->name('update');
-        Route::get('/{event}/edit', [EventWebController::class, 'edit'])->name('edit');
+        Route::group([
+            'prefix' => '{event}',
+        ], function(){
+            Route::get('edit', [EventWebController::class, 'edit'])->name('edit');
+            Route::get('member', [MiscWebController::class, 'getMemberByEvent'])->name('member-by-event');
+
+        });
         Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
         Route::post('/{event}/publish', [EventWebController::class, 'publish'])->name('publish');
     });
@@ -204,8 +210,9 @@ Route::group([
     'prefix' => 'misc',
     'as' => 'misc.'
 ], function () {
-    Route::get('/{tag_id}/member', [MiscWebController::class, 'getMemberByTag'])->name('member-by-tag');
-    Route::get('/{finance_id}/image', [MiscWebController::class, 'getImage'])->name('image');
+    Route::get('tag/{tag_id}/member', [MiscWebController::class, 'getMemberByTag'])->name('member-by-tag');
+    Route::get('finance/{finance_id}/image', [MiscWebController::class, 'getImage'])->name('image');
+    Route::get('event/{event_id}/member', [MiscWebController::class, 'getMemberByEvent'])->name('member-by-event');
 });
 
 Route::get('/webhook', [MiscWebController::class, 'getWebhook'])->name('getWebhook');

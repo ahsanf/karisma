@@ -284,9 +284,9 @@
         }
     }
 
-    function showFile(id){
+    function showFile(finance_id){
         $.ajax({
-            url: `{{ url('/misc') }}/${id}/image`,
+            url: `{{ url('/misc') }}/finance/${finance_id}/image`,
             type: 'GET',
             dataType: 'json',
             cache: true,

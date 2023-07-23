@@ -37,12 +37,12 @@ class NoteWebController extends Controller
 
     public function edit(Note $note)
     {
-        $data['action']     = ['form_editor_summernote','uc_select2'];
-        $data['page_title'] = 'Edit Catatan';
-        $data['card_title'] = 'Edit Catatan';
-        $data['note']       = $note->load('event');
+        $data['action']      = ['form_editor_summernote','uc_select2'];
+        $data['page_title']  = 'Edit Catatan';
+        $data['card_title']  = 'Edit Catatan';
+        $data['note']        = $note->load('event')->toArray();
         $data['breadcrumbs'] = LayoutHelper::setBreadcrumbs([['name' => 'Catatan'], ['name' => 'Edit Catatan']]);
-        $data['events']     = Event::get();
+        $data['events']      = Event::select('id', 'event_name')->get()->toArray();
 
         return view('admin.note.edit', compact('data'));
     }

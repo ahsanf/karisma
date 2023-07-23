@@ -39,7 +39,7 @@
                                 <select id="eventSelect" name="event_id" class="default-select">
                                     <option></option>
                                     @foreach ($data['events'] as $event)
-                                    <option value="{{ $event->id }}" @if($data['note']['event']['id'] == $event->id) selected @endif>{{ $event->event_name }}</option>
+                                    <option value="{{ $event['id'] }}" @if(!is_null($data['note']['event']))  @if($data['note']['event']['id'] == $event['id']) selected @endif @endif>{{ $event['event_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
