@@ -26,6 +26,9 @@ class Event extends Model
         'event_note'
     ];
 
+    public function note(){
+        return $this->hasOne(Note::class, 'event_id');
+    }
     public function members()
     {
         return $this->belongsToMany(Member::class, 'event_member', 'event_id', 'member_id')->withPivot('presence', 'status');

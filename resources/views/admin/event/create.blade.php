@@ -205,7 +205,7 @@
     $('.multi-select-tag').on('change', function(e){
         var tagId = $(this).val();
         $.ajax({
-            url: `{{ url('/misc') }}/${tagId}/member`,
+            url: `{{ url('/misc') }}/tag/${tagId}/member`,
             type: "GET",
             dataType: 'json',
             cache: true,

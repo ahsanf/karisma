@@ -67,7 +67,7 @@ class MiscWebController extends Controller
         $data['member'] = Member::find($decrypt['member_id']);
         $data['date_string'] = DateHelper::getDateString($data['event']->date);
         $data['presence_status'] = $data['member']->events()->where('member_id', $decrypt['member_id'])->where('event_id', $decrypt['event_id'])->first()->pivot->status;
-        
+
         return view('invitation.index', compact('data'));
     }
 
@@ -100,6 +100,28 @@ class MiscWebController extends Controller
 
         return $data;
 
+    }
+
+    public function getMemberByEvent($event_id)
+    {
+        $event = Event::find($event_id);
+        $members = $event->members->pluck('id');
+
+        return response()->json($members);
+    }
+
+    public function getTagByMembers($member_id)
+    {
+        $members = Member::whereIn('id', $member_id)->with('tag')->get()->toArray();
+        $tags = [];
+        foreach($members as $member){
+            foreach($member['tag'] as $tag){
+                $tags[] = $tag['id'];
+            }
+        }
+
+
+        return response()->json(array_unique($tags));
     }
 
 

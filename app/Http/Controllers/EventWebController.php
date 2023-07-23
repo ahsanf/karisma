@@ -86,7 +86,14 @@ class EventWebController extends Controller
 
     public function edit(Event $event)
     {
-        //
+        $data['action']         = ['form_wizard', 'form_pickers','uc_select2'];
+        $data['page_title']     = 'Edit Acara';
+        $data['card_title']     = 'Acara';
+        $data['breadcrumbs']    = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Edit Acara']]);
+        $data['members']        = Member::get();
+        $data['tags']           = Tag::get();
+        $data['event']          = $event;
+        return view('admin.event.edit', compact('data'));
     }
 
     /**

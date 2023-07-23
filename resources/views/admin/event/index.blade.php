@@ -51,18 +51,16 @@
                                 <div class="row d-flex justify-content-center">
 
                                     <span data-toggle="tooltip" title="Kirim Undangan">
-                                        <form action="{{ route('admin.event.publish', ['event' => $item['id']]) }}" method="post">
-                                        @csrf
-                                            <button class="btn btn-success shadow btn-xs sharp mr-1" type="submit">
-                                                <i class="fa-solid fa-paper-plane" style="color: white"></i>
+                                            <button class="btn btn-success shadow btn-xs sharp mr-1" onclick="publishEvent(`{{ $item['id'] }}`)">
+                                                <div class="spinner-border spinner-border-sm spinner-send" role="status" id="spinner-{{ $item['id'] }}">
+                                                </div>
+                                                <i class="fa-solid fa-paper-plane" style="color: white" id="icon-{{ $item['id'] }}"></i>
                                             </button>
-                                        </form>
-
                                     </span>
 
                                     <span data-toggle="tooltip" title="Edit">
-                                        <button class="btn btn-warning shadow btn-xs sharp mr-1">
-                                            <i class="fa-solid fa-pencil" style="color: white"></i></button>
+                                        <a href="{{ route('admin.event.edit', ['event' => $item['id']]) }}"class="btn btn-warning shadow btn-xs sharp mr-1">
+                                            <i class="fa-solid fa-pencil" style="color: white"></i></a>
                                     </span>
 
                                     <span data-toggle="tooltip" title="Hapus">
@@ -90,3 +88,35 @@
     </div>
 </div>
 @endsection
+@push('custom_js')
+<script>
+    $(document).ready(function() {
+        $('.spinner-send').hide();
+    });
+
+    function publishEvent(event_id){
+        $.ajax({
+            url: `event/${event_id}/publish`,
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                $(`#spinner-${event_id}`).hide();
+                $(`#icon-${event_id}`).show();
+                swal("Berhasil!", data.message, "success");
+            },
+            beforeSend: function() {
+                $(`#spinner-${event_id}`).show();
+                $(`#icon-${event_id}`).hide();
+            },
+            error: function(data) {
+                $(`#spinner-${event_id}`).hide();
+                $(`#icon-${event_id}`).show();
+                swal("Gagal!", data.message, "error");
+                console.log(data.message);
+            }
+        })
+    }
+</script>
+@endpush
