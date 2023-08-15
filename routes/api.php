@@ -29,6 +29,6 @@ Route::group([
         'as' => 'personal-finance.'
     ], function(){
         Route::post('/store', [BotApiController::class, 'storePersonalFinance'])->name('store');
-        Route::post('/getall', [BotApiController::class, 'getAllPersonalFinance'])->name('get-all');
+        Route::get('/get-all', [BotApiController::class, 'getAllPersonalFinance'])->name('get-all');
     });
 });
