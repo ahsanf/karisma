@@ -24,4 +24,10 @@ Route::group([
     'as' => 'api.'
 ], function(){
     Route::get('/get-balance', [BotApiController::class, 'getBalance'])->name('get-balance');
+    Route::group([
+        'prefix' => 'personal-finance',
+        'as' => 'personal-finance.'
+    ], function(){
+        Route::post('/store', [BotApiController::class, 'storePersonalFinance'])->name('store');
+    });
 });
