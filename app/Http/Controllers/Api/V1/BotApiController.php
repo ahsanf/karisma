@@ -58,18 +58,24 @@ class BotApiController extends Controller
         } elseif($request->type == 'expense'){
             $type = 'Pengeluaran';
         }
-
-        $data['total_income'] = 'Rp. '.
-                                number_format(PersonalFinance::where('type', 'income')->sum('amount'), 0, ',', '.');
-        $data['total_expense'] = 'Rp. '.
-                                number_format(PersonalFinance::where('type', 'expense')->sum('amount'), 0, ',', '.');
-
         $message = $type.' - '.$request->name.' sebesar '.'Rp. '.
                     number_format($request->amount, 0, ',', '.').' telah ditambahkan.';
 
         return response()->json([
             'status' => 'success',
             'message' => $message,
+        ], 201);
+    }
+
+    public function getAllPersonalFinance()
+    {
+        $data['total_income'] = 'Rp. '.
+                                number_format(PersonalFinance::where('type', 'income')->sum('amount'), 0, ',', '.');
+        $data['total_expense'] = 'Rp. '.
+                                number_format(PersonalFinance::where('type', 'expense')->sum('amount'), 0, ',', '.');
+
+        return response()->json([
+            'status' => 'success',
             'data' => $data
         ], 201);
     }
