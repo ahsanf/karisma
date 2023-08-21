@@ -79,4 +79,143 @@ class BotApiController extends Controller
             'data' => $data
         ], 201);
     }
+
+    public function getPersonalFinance(Request $request)
+    {
+        $year = $request->year ?? date('Y');
+        $month = $request->month ?? '';
+        $finance = PersonalFinance::filter([
+                            'year' => $year,
+                            'month' => $month
+                    ])->get();
+        $data['total_income'] = 'Rp. '.
+                                number_format($finance->where('type', 'income')->sum('amount'), 0, ',', '.');
+
+        $data['total_expense'] = 'Rp. '.
+                                number_format($finance->where('type', 'expense')->sum('amount'), 0, ',', '.');
+
+        $monthName = $this->getIndonesianMonthName($month);
+
+        $data['message'] = 'Laporan Keuangan '.$monthName.' '.$year;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ], 201);
+    }
+
+    public function getRecapFinanceByYear(Request $request)
+    {
+        $year = $request->year ?? date('Y');
+        $finances = PersonalFinance::filter(['year' => $year])
+        ->select('name', 'amount', 'month', 'year', 'type')
+        ->orderBy('month', 'asc')
+        ->get()->toArray();
+
+        $filter['income'] = array_values(array_filter($finances, [$this, 'splitIncome']));
+        $filter['expense'] = array_values(array_filter($finances, [$this, 'splitExpense']));
+
+        foreach($this->groupBy($filter['expense'], 'month') as $key => $expenses){
+            foreach($expenses as $expense){
+                $data[$key]['expense'] = array_sum(array_column($expenses, 'amount'));
+                $data[$key]['month'] = $expense['month'];
+            }
+        }
+
+        foreach($this->groupBy($filter['income'], 'month') as $key => $incomes){
+            foreach($incomes as $income){
+                $data[$key]['income'] = array_sum(array_column($incomes, 'amount'));
+                $data[$key]['month'] = $income['month'];
+            }
+        }
+
+
+        $rawDatas = array_values($data);
+        $result = [];
+
+        foreach($rawDatas as $rawData){
+            if(!isset($rawData['income'])){
+                $rawData['income'] = 0;
+            }
+            $temp['income'] = 'Rp. '.
+                                number_format($rawData['income'] , 0, ',', '.');
+            $temp['expense'] = 'Rp. '.
+                                number_format($rawData['expense'] , 0, ',', '.');
+            $temp['month_name'] = $this->getIndonesianMonthName($rawData['month']);
+
+            array_push($result, $temp);
+
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Rekap Laporan Keuangan Tahun '.$year,
+            'data' => $result
+        ], 200);
+
+    }
+
+    private function groupBy($array, $key) {
+        $return = array();
+        foreach($array as $val) {
+            $return[$val[$key]][] = $val;
+        }
+        return $return;
+    }
+
+    private function splitIncome($var){
+        return $var['type'] == 'income';
+    }
+
+    private function splitExpense($var){
+        return $var['type'] == 'expense';
+    }
+
+    private function getIndonesianMonthName($month)
+    {
+        $monthName = '';
+        switch ($month) {
+            case '01':
+                $monthName = 'Januari';
+                break;
+            case '02':
+                $monthName = 'Februari';
+                break;
+            case '03':
+                $monthName = 'Maret';
+                break;
+            case '04':
+                $monthName = 'April';
+                break;
+            case '05':
+                $monthName = 'Mei';
+                break;
+            case '06':
+                $monthName = 'Juni';
+                break;
+            case '07':
+                $monthName = 'Juli';
+                break;
+            case '08':
+                $monthName = 'Agustus';
+                break;
+            case '09':
+                $monthName = 'September';
+                break;
+            case '10':
+                $monthName = 'Oktober';
+                break;
+            case '11':
+                $monthName = 'November';
+                break;
+            case '12':
+                $monthName = 'Desember';
+                break;
+            default:
+                $monthName = 'Tahun';
+                break;
+        }
+
+        return $monthName;
+    }
 }
