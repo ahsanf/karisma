@@ -24,4 +24,8 @@ class PersonalFinanceFilter extends ModelFilter
     {
         return $this->where('year', $year);
     }
+
+    public function search($search){
+        return $this->orWhere('name', 'like', "%$search%");
+    }
 }

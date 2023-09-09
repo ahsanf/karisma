@@ -84,9 +84,12 @@ class BotApiController extends Controller
     {
         $year = $request->year ?? date('Y');
         $month = $request->month ?? '';
+        $search = $request->search ?? '';
+        // dd($search);
         $finance = PersonalFinance::filter([
                             'year' => $year,
-                            'month' => $month
+                            'month' => $month,
+                            'search' => $search
                     ])->get();
         $data['total_income'] = 'Rp. '.
                                 number_format($finance->where('type', 'income')->sum('amount'), 0, ',', '.');
@@ -96,12 +99,15 @@ class BotApiController extends Controller
 
         $monthName = $this->getIndonesianMonthName($month);
 
-        $data['message'] = 'Laporan Keuangan '.$monthName.' '.$year;
-
+        if(!empty($search)){
+            $data['message'] = 'Laporan Keuangan '.$monthName.' '.$year.' dengan kata kunci '.$search;
+        } elseif($month == ''){
+            $data['message'] = 'Laporan Keuangan '.$year;
+        }
         return response()->json([
             'status' => 'success',
             'data' => $data
-        ], 201);
+    ], 201);
     }
 
     public function getRecapFinanceByYear(Request $request)
