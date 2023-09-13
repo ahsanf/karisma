@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <h4 class="card-title">{{ $data['card_title'] }}</h4>
 
-                    <button data-toggle="modal" data-target="#addCategoryModal" class="btn btn-primary">Tambah Tag</button>
+                    <button data-toggle="modal" data-target="#addCategoryModal" class="btn btn-primary">Tambah Kategori</button>
 
                 </div>
                 <div class="card-body">

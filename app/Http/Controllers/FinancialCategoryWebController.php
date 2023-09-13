@@ -25,8 +25,9 @@ class FinancialCategoryWebController extends Controller
     {
         try {
             $data = $request->validated();
+            dd($data);
             FinancialCategory::create($data);
-            return R::redirectRouteStatus('admin.member.index','success','Member berhasil ditambahkan');
+            return R::redirectRouteStatus('admin.financial-category.index','success','Kategori berhasil ditambahkan');
         } catch (\Throwable $th) {
             return R::redirectBackStatus('error',$th->getMessage());
         }
@@ -37,7 +38,7 @@ class FinancialCategoryWebController extends Controller
         try {
             $data = $request->validated();
             $financialCategory->update($data);
-            return R::redirectRouteStatus('admin.member.index','success','Member berhasil diupdate');
+            return R::redirectRouteStatus('admin.financial-category.index','success','Member berhasil diupdate');
         } catch (\Throwable $th) {
             return R::redirectBackStatus('error',$th->getMessage());
         }
@@ -47,7 +48,7 @@ class FinancialCategoryWebController extends Controller
     {
         try {
             $financialCategory->delete();
-            return R::redirectRouteStatus('admin.member.index','success','Member berhasil dihapus');
+            return R::redirectRouteStatus('admin.financial-category.index','success','Member berhasil dihapus');
         } catch (\Throwable $th) {
             return R::redirectBackStatus('error',$th->getMessage());
         }

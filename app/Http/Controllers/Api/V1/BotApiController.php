@@ -82,32 +82,54 @@ class BotApiController extends Controller
 
     public function getPersonalFinance(Request $request)
     {
-        $year = $request->year ?? date('Y');
-        $month = $request->month ?? '';
+        $years = $request->year ?? date('Y');
+        $months = $request->month ?? [1,2,3,4,5,6,7,8,9,10,11,12];
         $search = $request->search ?? '';
-        // dd($search);
-        $finance = PersonalFinance::filter([
-                            'year' => $year,
-                            'month' => $month,
-                            'search' => $search
-                    ])->get();
+        $monthNames = [];
+        $yearsNames = [];
+
+        if(!is_array($months)){
+            $months = explode(',', $months);
+        }
+
+        if(!is_array($years)){
+            $years = explode(',', $years);
+        }
+
+        $finance  = PersonalFinance::whereIn('month', $months)
+                    ->whereIn('year', $years)
+                    ->where('name','LIKE','%'.$search.'%')
+                    ->get();
+
         $data['total_income'] = 'Rp. '.
                                 number_format($finance->where('type', 'income')->sum('amount'), 0, ',', '.');
 
         $data['total_expense'] = 'Rp. '.
                                 number_format($finance->where('type', 'expense')->sum('amount'), 0, ',', '.');
 
-        $monthName = $this->getIndonesianMonthName($month);
+        foreach($months as $month){
+            $monthName = $this->getIndonesianMonthName($month);
+            array_push($monthNames, $monthName);
+        }
+
+        foreach($years as $year){
+            array_push($yearsNames, $year);
+        }
 
         if(!empty($search)){
-            $data['message'] = 'Laporan Keuangan '.$monthName.' '.$year.' dengan kata kunci '.$search;
-        } elseif($month == ''){
-            $data['message'] = 'Laporan Keuangan '.$year;
+            $data['message'] = 'Laporan Keuangan '.
+                                implode(', ', $monthNames).' '.
+                                implode(', ', $yearsNames).' dengan kata kunci '.$search;
+        } else {
+            $data['message'] = 'Laporan Keuangan '.
+                                implode(', ', $monthNames).' '.
+                                implode(', ', $yearsNames);
         }
+
         return response()->json([
             'status' => 'success',
             'data' => $data
-    ], 201);
+        ], 200);
     }
 
     public function getRecapFinanceByYear(Request $request)
@@ -168,6 +190,7 @@ class BotApiController extends Controller
         }
         return $return;
     }
+
 
     private function splitIncome($var){
         return $var['type'] == 'income';
