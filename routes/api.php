@@ -23,7 +23,7 @@ Route::group([
     'prefix'=> 'v1',
     'as' => 'api.'
 ], function(){
-    Route::get('/get-balance', [BotApiController::class, 'getBalance'])->name('get-balance');
+
     Route::group([
         'prefix' => 'personal-finance',
         'as' => 'personal-finance.'
@@ -33,5 +33,13 @@ Route::group([
         Route::get('/get', [BotApiController::class, 'getPersonalFinance'])->name('get');
         Route::get('/recap', [BotApiController::class, 'getRecapFinanceByYear'])->name('recap');
 
+    });
+    Route::group([
+        'prefix' => 'karisma',
+        'as' => 'karisma.'
+    ], function() {
+        Route::get('/get-events', [BotApiController::class, 'getEvents'])->name('get-events');
+        Route::get('/get-balance', [BotApiController::class, 'getBalance'])->name('get-balance');
+        Route::get('/get-event-member',[BotApiController::class, 'getEventMembers'])->name('get-event-member');
     });
 });
