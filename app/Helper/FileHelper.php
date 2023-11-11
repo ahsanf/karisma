@@ -36,7 +36,6 @@ class FileHelper
             $uploadedFile->storeAs(
                 $path,
                 $fileName,
-            
             );
 
             return $fileName;

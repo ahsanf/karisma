@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Financial;
 use App\Models\PersonalFinance;
 use Illuminate\Http\Request;
@@ -246,5 +247,43 @@ class BotApiController extends Controller
         }
 
         return $monthName;
+    }
+
+    public function getEvents(){
+        $data['events'] = Event::select('id','event_name', 'event_date')
+                        ->orderBy('event_date', 'desc')
+                        ->withCount('members')
+                        ->get()
+                        ->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Daftar Acara',
+            'data' => $data
+        ], 200);
+    }
+
+    public function getEventMembers(Request $request) {
+        $eventId = $request->eventId;
+
+        $event = Event::findOrFail($eventId)
+        ->load('members')
+        ->toArray();
+        $event['final_members'] = [];
+
+        foreach($event['members'] as $member) {
+            $imagePath = url('/').DIRECTORY_SEPARATOR.'uploads'.$member['pivot']['image_path'];
+            $member['pivot']['image_path'] = $imagePath;
+            array_push($event['final_members'], $member);
+        }
+
+        unset($event['members']);
+
+        $data['event'] = $event;
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Acara',
+            'data' => $data
+        ], 200);
     }
 }

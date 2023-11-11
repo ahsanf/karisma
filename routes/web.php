@@ -133,6 +133,7 @@ Route::group([
         });
         Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
         Route::post('/{event}/publish', [EventWebController::class, 'publish'])->name('publish');
+        Route::post('/{event}/delete-invitation', [EventWebController::class, 'deleteInvitation'])->name('deleteInvitation');
     });
 
     //Member

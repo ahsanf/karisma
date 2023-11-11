@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helper\DateHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -31,7 +32,8 @@ class Event extends Model
     }
     public function members()
     {
-        return $this->belongsToMany(Member::class, 'event_member', 'event_id', 'member_id')->withPivot('presence', 'status');
+        return $this->belongsToMany(Member::class, 'event_member', 'event_id', 'member_id')
+        ->withPivot('presence', 'status','image_path');
     }
 
     public function notification()
@@ -43,5 +45,14 @@ class Event extends Model
         $day_name = DateHelper::getDayName($date);
         $date_string = DateHelper::getDateString($date);
         return $day_name . ', ' . $date_string;
+    }
+
+    public static function getFilePath()
+    {
+        return public_path().Storage::url('public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'event');
+    }
+    public static function getUploadPath()
+    {
+        return DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'uploads'.DIRECTORY_SEPARATOR.'event';
     }
 }

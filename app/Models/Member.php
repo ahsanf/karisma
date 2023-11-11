@@ -21,7 +21,8 @@ class Member extends Model
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_member', 'member_id', 'event_id')->withPivot('presence', 'status');
+        return $this->belongsToMany(Event::class, 'event_member', 'member_id', 'event_id')
+        ->withPivot('presence', 'status', 'image_path');
     }
 
     public function tag()

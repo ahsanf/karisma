@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\DateHelper;
+use App\Helper\FileHelper;
 use App\Helper\LayoutHelper as Layout;
 use App\Helper\RedirectHelper as R;
 use App\Http\Requests\EventRequest;
@@ -13,6 +14,11 @@ use App\Notifications\MemberInvitation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Spatie\Browsershot\Browsershot;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Spatie\PdfToImage\Pdf as PdfToImage;
+use Illuminate\Support\Str;
 
 class EventWebController extends Controller
 {
@@ -123,13 +129,20 @@ class EventWebController extends Controller
         return R::redirectBackStatus('success','Event berhasil dihapus');
     }
 
+
     public function publish(Event $event)
     {
         //example
-        // $data["phone_number"]= "6281359888622"; $data["member_name"]= "Amin"; $data["day_name"]= "Selasa"; $data["day_month_year"]= "20 Juni 2023"; $data["start_date"]= "19=00"; $data["end_date"]= "21=00 WIB"; $data["place"]= "Rumah Bapak Amin"; $data["event_name"]= "Rapat Perobohan Rumah"; $data["notes"]= "Harap membawa iuran minimal Rp. 2000"; $data["btn_link"]= "eyJpdiI6ImZENW50bTNhQ29ycWMrRGd0OWNDNlE9PSIsInZhbHVlIjoiUDc1dzFjNVlMbENGYlI2R0xGT2N4QT09IiwibWFjIjoiNDViMjJlOWM5OGY0NGEzNjg0NzBhZTBiZjU0MGExYmY3ZGI3ZGFkZWNkM2QwNjE0MzFiMmIwMTE5NjNiMDBkOCIsInRhZyI6IiJ9"
         try {
             if($event->event_type == Event::EVENT_TYPE_ALL_MEMBER){
                 $members = Member::get();
+                $path = Event::getFilePath().DIRECTORY_SEPARATOR.
+                        'invitation'.DIRECTORY_SEPARATOR.
+                        Str::uuid();
+
+                if(!is_dir($path)){
+                    mkdir($path, 0777, true);
+                }
 
                 foreach($members as $member){
                     $data['phone_number']     = $member->member_phone;
@@ -141,16 +154,27 @@ class EventWebController extends Controller
                     $data['place']            = $event->event_place;
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
-                    $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
-
-                    $member->notify(new MemberInvitation($data));
+                    $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->event_name);
+                    $fileName                 = Str::uuid();
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileName);
+                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileName);
+                    unlink($generatedPdf);
+                    $member->events()->sync([
+                        $event->id => [
+                            'image_path' => $this->mappingPath($generatedImage),
+                            'member_id'=> $member->id
+                        ]
+                    ]);
                 }
 
                 $event->notification()->create([
                     'status' => 0
                 ]);
-            } else if ($event->event_type == Event::EVENT_TYPE_MEMBER){
+            } elseif ($event->event_type == Event::EVENT_TYPE_MEMBER){
                 $members = $event->members;
+                $path = Event::getFilePath().DIRECTORY_SEPARATOR.
+                        'invitation'.DIRECTORY_SEPARATOR.
+                        Str::uuid();
 
                 foreach($members as $member){
                     $data['phone_number']     = $member->member_phone;
@@ -163,7 +187,17 @@ class EventWebController extends Controller
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
+                    $fileName                 = Str::uuid();
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileName);
+                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileName);
+                    unlink($generatedPdf);
 
+                    $member->events()->sync([
+                        $event->id => [
+                            'image_path' => $this->mappingPath($generatedImage),
+                            'member_id'=> $member->id
+                        ]
+                    ]);
                     $member->notify(new MemberInvitation($data));
                 }
 
@@ -179,4 +213,50 @@ class EventWebController extends Controller
 
     }
 
+    public function generatePdf(array $data, string $path, string $fileName): string {
+        $pdf = Pdf::loadView('admin.template.invitation', ['data' => $data ])->setPaper('a4', 'potrait');
+        $fullPath = $path.DIRECTORY_SEPARATOR.$fileName.'.pdf';
+        $pdf->save($fullPath);
+
+        return $fullPath;
+    }
+
+    public function generateImage(string $pdfFullPath, string $targetPath,string $fileName): string {
+        $fullPath = $targetPath.DIRECTORY_SEPARATOR.$fileName.'.jpg';
+        $pdf = new PdfToImage($pdfFullPath);
+        $pdf->saveImage($fullPath);
+
+        return $fullPath;
+    }
+    public function deleteInvitation(Event $event){
+        foreach($event->members as $member){
+            $this->deleteImage($member->pivot->image_path);
+            $member->events()->sync([
+                $event->id => [
+                    'image_path' => null,
+                    'member_id'=> $member->id
+                ]
+            ]);
+        }
+    }
+
+
+    public function deleteImage(string | null $imagePath){
+        if($imagePath == null){
+            return;
+        }
+        $path = public_path().Storage::url('public' . DIRECTORY_SEPARATOR . 'uploads');
+        $imagePath = $path.$imagePath;
+     
+        if(file_exists($imagePath)){
+            unlink($imagePath);
+        }
+    }
+
+
+    public function mappingPath($path): string
+    {
+        return explode("/uploads",$path)[1];
+    }
 }
+
