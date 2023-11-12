@@ -260,6 +260,8 @@ class BotApiController extends Controller
 
         foreach($data['events'] as $event) {
             $event['date_string'] = DateHelper::getDateString($event['event_date']);
+            $event['format_start'] = DateHelper::formatTime($event['event_start']);
+            $event['format_end'] = DateHelper::formatTime($event['event_end']);
             array_push($finalResult, $event);
         }
 
