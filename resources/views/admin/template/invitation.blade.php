@@ -36,7 +36,7 @@
             </p>
             <p
                 style="position: absolute; left: 57px; top: 783px; font-size: 18.658754348754883px; font-style: italic; text-align: left; color: #000;">
-                NB: {{ $data['notes'] }}
+                <b>NB: {{ $data['notes'] }}</b>
             </p>
             <p
                 style="position: absolute; left: 57px; top: 320.99px; font-size: 18.658754348754883px; text-align: left; color: #000;">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Financial;
@@ -250,16 +251,22 @@ class BotApiController extends Controller
     }
 
     public function getEvents(){
-        $data['events'] = Event::select('id','event_name', 'event_date')
+        $finalResult = [];
+        $data['events'] = Event::select( 'id', 'event_name', 'event_start', 'event_place', 'event_day', 'event_end', 'event_date', 'event_place')
                         ->orderBy('event_date', 'desc')
                         ->withCount('members')
                         ->get()
                         ->toArray();
 
+        foreach($data['events'] as $event) {
+            $event['date_string'] = DateHelper::getDateString($event['event_date']);
+            array_push($finalResult, $event);
+        }
+
         return response()->json([
             'status' => 'success',
             'message' => 'Daftar Acara',
-            'data' => $data
+            'data' => $finalResult
         ], 200);
     }
 
