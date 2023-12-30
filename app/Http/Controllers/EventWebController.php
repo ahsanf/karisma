@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Spatie\PdfToImage\Pdf as PdfToImage;
 use Illuminate\Support\Str;
+use ZanySoft\Zip\Facades\Zip;
 
 class EventWebController extends Controller
 {
@@ -31,8 +32,11 @@ class EventWebController extends Controller
         $data['events']      = [];
         $events              = Event::with('notification','members')->withCount('members')->get();
         $data['breadcrumbs'] = Layout::setBreadcrumbs([['name' => 'Acara'], ['name' => 'Daftar Acara']]);
-
+        $data['all_members'] = Member::count();
         foreach($events as $event){
+            if($event->event_type == Event::EVENT_TYPE_ALL_MEMBER){
+                $event['members_count'] = $data['all_members'];
+            }
             $event['member_present'] = 0;
             $event['member_not_present'] = 0;
             $event['member_no_answer'] = 0;
@@ -50,6 +54,7 @@ class EventWebController extends Controller
             }
             $data['events'][] = $event->toArray();
         }
+        // dd($data);
         return view('admin.event.index', compact('data'));
     }
 
@@ -145,6 +150,7 @@ class EventWebController extends Controller
                 }
 
                 foreach($members as $member){
+                    $fileNamePrefix = 'RT '.(string)$member->member_neighborhood.'-';
                     $data['phone_number']     = $member->member_phone;
                     $data['member_name']      = $member->member_shortname ?? $member->member_name;
                     $data['day_name']         = $event->event_day;
@@ -155,9 +161,9 @@ class EventWebController extends Controller
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->event_name);
-                    $fileName                 = Str::uuid();
-                    $generatedPdf             = $this->generatePdf($data, $path, $fileName);
-                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileName);
+                    $fileName                 = $member->member_shortname ?? $member->member_name;
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName);
+                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileNamePrefix.$fileName);
                     unlink($generatedPdf);
                     $member->events()->sync([
                         $event->id => [
@@ -170,6 +176,10 @@ class EventWebController extends Controller
                 $event->notification()->create([
                     'status' => 0
                 ]);
+                $zipName = str_replace(' ', '-', strtolower($event->event_name.'.zip'));
+                $event->zip_path = $path.DIRECTORY_SEPARATOR.$zipName;
+                $event->save();
+                $this->makeZip($path, $zipName);
             } elseif ($event->event_type == Event::EVENT_TYPE_MEMBER){
                 $members = $event->members;
                 $path = Event::getFilePath().DIRECTORY_SEPARATOR.
@@ -177,6 +187,7 @@ class EventWebController extends Controller
                         Str::uuid();
 
                 foreach($members as $member){
+                    $fileNamePrefix = 'RT '.(string)$member->member_neighborhood.'-';
                     $data['phone_number']     = $member->member_phone;
                     $data['member_name']      = $member->member_shortname ?? $member->member_name;
                     $data['day_name']         = $event->event_day;
@@ -187,9 +198,9 @@ class EventWebController extends Controller
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
-                    $fileName                 = Str::uuid();
-                    $generatedPdf             = $this->generatePdf($data, $path, $fileName);
-                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileName);
+                    $fileName                 = $member->member_shortname ?? $member->member_name;
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName);
+                    $generatedImage           = $this->generateImage($generatedPdf, $path, $fileNamePrefix.$fileName);
                     unlink($generatedPdf);
 
                     $member->events()->sync([
@@ -198,12 +209,16 @@ class EventWebController extends Controller
                             'member_id'=> $member->id
                         ]
                     ]);
-                    $member->notify(new MemberInvitation($data));
                 }
 
                 $event->notification()->create([
                     'status' => 0
                 ]);
+                $zipName = str_replace(' ', '-', strtolower($event->event_name.'.zip'));
+                $event->zip_path = $path.DIRECTORY_SEPARATOR.$zipName;
+                $event->save();
+
+                $this->makeZip($path, $zipName);
             }
 
             return R::redirectBackStatus('success','Undangan berhasil dikirim');
@@ -247,7 +262,7 @@ class EventWebController extends Controller
         }
         $path = public_path().Storage::url('public' . DIRECTORY_SEPARATOR . 'uploads');
         $imagePath = $path.$imagePath;
-     
+
         if(file_exists($imagePath)){
             unlink($imagePath);
         }
@@ -257,6 +272,36 @@ class EventWebController extends Controller
     public function mappingPath($path): string
     {
         return explode("/uploads",$path)[1];
+    }
+
+    public function makeZip(string $folderPath, string $zipName) {
+        $files = scandir($folderPath);
+        $zip = Zip::create($folderPath.DIRECTORY_SEPARATOR.$zipName);
+        foreach($files as $file){
+            if($file != '.' && $file != '..'){
+                $filePath = $folderPath.DIRECTORY_SEPARATOR.$file;
+                $zip->add($filePath);
+            }
+        }
+        $zip->close();
+
+        foreach($files as $file){
+            if($file != '.' && $file != '..'){
+                $filePath = $folderPath.DIRECTORY_SEPARATOR.$file;
+                unlink($filePath);
+            }
+        }
+    }
+
+    public function downloadZip(Event $event){
+        return response()->download($event->zip_path);
+    }
+
+    public function deleteZip(Event $event){
+        unlink($event->zip_path);
+        $event->zip_path = null;
+        $event->save();
+        return R::redirectBackStatus('success','File zip berhasil dihapus');
     }
 }
 

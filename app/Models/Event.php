@@ -24,7 +24,13 @@ class Event extends Model
         'event_end',
         'event_description',
         'event_type',
-        'event_note'
+        'event_note',
+        'zip_path'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 
     public function note(){

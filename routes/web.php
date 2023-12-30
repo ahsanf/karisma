@@ -129,7 +129,8 @@ Route::group([
         ], function(){
             Route::get('edit', [EventWebController::class, 'edit'])->name('edit');
             Route::get('member', [MiscWebController::class, 'getMemberByEvent'])->name('member-by-event');
-
+            Route::get('downloadZip', [EventWebController::class, 'downloadZip'])->name('downloadZip');
+            Route::post('deleteZip', [EventWebController::class, 'deleteZip'])->name('deleteZip');
         });
         Route::post('/{event}/delete', [EventWebController::class, 'destroy'])->name('destroy');
         Route::post('/{event}/publish', [EventWebController::class, 'publish'])->name('publish');

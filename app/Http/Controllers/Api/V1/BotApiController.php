@@ -276,8 +276,8 @@ class BotApiController extends Controller
         $eventId = $request->eventId;
 
         $event = Event::findOrFail($eventId)
-        ->load('members')
-        ->toArray();
+                ->load('members')
+                ->toArray();
         $event['final_members'] = [];
 
         foreach($event['members'] as $member) {
@@ -285,14 +285,16 @@ class BotApiController extends Controller
             $member['pivot']['image_path'] = $imagePath;
             array_push($event['final_members'], $member);
         }
-
+        $event['event_date'] = DateHelper::getDateString($event['event_date']);
+        $event['event_start'] = DateHelper::formatTime($event['event_start']);
+        $event['event_end'] = DateHelper::formatTime($event['event_end']);
+        
         unset($event['members']);
 
-        $data['event'] = $event;
         return response()->json([
             'status' => 'success',
             'message' => 'Data Acara',
-            'data' => $data
+            'data' => $event
         ], 200);
     }
 }
