@@ -116,15 +116,31 @@
             success: function(data) {
                 $(`#spinner-${event_id}`).hide();
                 $(`#icon-${event_id}`).show();
-                swal("Berhasil!", data.message, "success");
-                window.location.reload();
+                swal({
+                    title: "Berhasil!",
+                    text: data.message,
+                    type: "success",
+                    showCancelButton: !0,
+                    confirmButtonColor: "#25A247",
+                    confirmButtonText: "Download Zip",
+                    cancelButtonText: "Cancel",
+                }).then(function(isConfirm) {
+                    if (isConfirm.value === true) {
+                        window.location.href = `event/${event_id}/downloadZip`;
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1900);
+                    } else {
+                        window.location.reload();
+                    }
+                });
             },
             beforeSend: function() {
                 $(`#spinner-${event_id}`).show();
                 $(`#icon-${event_id}`).hide();
             },
             error: function(data) {
-                $(`#spinner-${event_id}`).hide();
+                $(`#spinner-${event_id}`).hide();x
                 $(`#icon-${event_id}`).show();
                 swal("Gagal!", data.message, "error");
                 console.log(data.message);
