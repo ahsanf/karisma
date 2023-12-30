@@ -25,7 +25,6 @@ class FinancialCategoryWebController extends Controller
     {
         try {
             $data = $request->validated();
-            dd($data);
             FinancialCategory::create($data);
             return R::redirectRouteStatus('admin.financial-category.index','success','Kategori berhasil ditambahkan');
         } catch (\Throwable $th) {
