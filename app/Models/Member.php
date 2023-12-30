@@ -12,6 +12,11 @@ class Member extends Model
 
     protected $table = 'members';
 
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     protected $fillable = [
         'member_name',
         'member_shortname',
