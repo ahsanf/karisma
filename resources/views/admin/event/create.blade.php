@@ -68,6 +68,17 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label for="" class="text-label">Kategori Event</label>
+                                    <select class="form-control default-select" id="sel1" name="event_category">
+                                        <option disabled selected>Pilih Kategori</option>
+                                        <option value="1">Rapat Biasa</option>
+                                        <option value="2">Sinoman</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="" class="text-label">Catatan (Opsional)</label>
                                     <textarea class="form-control" name="event_note" id="" cols="30" rows="10" placeholder="Masukkan Catatan"></textarea>
                                 </div>

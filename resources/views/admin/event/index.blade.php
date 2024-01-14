@@ -22,7 +22,7 @@
                             <th class="text-center">Acara</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Jumlah Undangan</th>
-                            <th class="text-center">Undangan</th>
+                            <th class="text-center">Kategori</th>
                             <th class="text-center" width="10%">Tipe</th>
                             <th class="text-center">Aksi</th>
                         </tr>
@@ -36,12 +36,10 @@
                             <td class="text-center"><span class="badge light badge-primary">{{ $item['members_count'] }}</span></td>
                             <td class="text-center">
 
-                                @if($item['zip_path'] != null || $item['zip_path'] != '')
-                                <span class="badge light badge-success">Sudah Dibuat</span>
-                                <input type="hidden" id="invitationStatus-{{ $item['id'] }}" value="1">
+                                @if($item['event_category'] == 2)
+                                <span class="badge light badge-success">Sinoman</span>
                                 @else
-                                <span class="badge light badge-danger">Belum Dibuat</span>
-                                <input type="hidden" id="invitationStatus-{{ $item['id'] }}" value="0">
+                                <span class="badge light badge-danger">Rapat</span>
                                 @endif
                             <td class="text-center">
                                 @if($item['event_type'] == 1)
@@ -56,7 +54,7 @@
                                         <button class="btn btn-success shadow btn-xs sharp mr-1" onclick="publishEvent(`{{ $item['id'] }}`)">
                                             <div class="spinner-border spinner-border-sm spinner-send" role="status" id="spinner-{{ $item['id'] }}" style="display: none;">
                                             </div>
-                                            <i class="fa-solid fa-paper-plane" style="color: white" id="icon-{{ $item['id'] }}"></i>
+                                            <i class="fa-solid fa-download" style="color: white" id="icon-{{ $item['id'] }}"></i>
                                         </button>
                                     </span>
                                     @endif
@@ -126,10 +124,11 @@
                     cancelButtonText: "Cancel",
                 }).then(function(isConfirm) {
                     if (isConfirm.value === true) {
-                        window.location.href = `event/${event_id}/downloadZip`;
+                        location.href = `event/${event_id}/downloadZip`;
+
                         setTimeout(() => {
-                            window.location.reload();
-                        }, 1900);
+                            deleteZip(event_id);
+                        }, 2000);
                     } else {
                         window.location.reload();
                     }
@@ -148,6 +147,33 @@
         })
         }
 
+    }
+
+
+    function downloadZip(event_id) {
+        $.ajax({
+            url: `event/${event_id}/downloadZip`,
+            type: "GET",
+            data: {
+                _token: "{{ csrf_token() }}",
+            },
+            success: function(response){
+                if(response.zip) {
+                    location.href = response.zip;
+                }
+            }
+
+        })
+    }
+    function deleteZip(event_id) {
+        $.ajax({
+            url: `event/${event_id}/deleteZip`,
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+            },
+
+        })
     }
 
     function deleteInvitation(event_id) {

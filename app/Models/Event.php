@@ -13,6 +13,8 @@ class Event extends Model
 
     const EVENT_TYPE_ALL_MEMBER = 1;
     const EVENT_TYPE_MEMBER = 0;
+    const EVENT_CATEGORY_RAPAT = 1;
+    const EVENT_CATEGORY_SINOMAN = 2;
     protected $table = 'events';
 
     protected $fillable = [
@@ -25,6 +27,7 @@ class Event extends Model
         'event_description',
         'event_type',
         'event_note',
+        'event_category',
         'zip_path'
     ];
 

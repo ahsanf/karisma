@@ -161,8 +161,9 @@ class EventWebController extends Controller
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->event_name);
+                    $data['event_category']   = $event->event_category;
                     $fileName                 = $member->member_shortname ?? $member->member_name;
-                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName);
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName, $event->event_category);
                     $generatedImage           = $this->generateImage($generatedPdf, $path, $fileNamePrefix.$fileName);
                     unlink($generatedPdf);
                     $member->events()->sync([
@@ -176,7 +177,7 @@ class EventWebController extends Controller
                 $event->notification()->create([
                     'status' => 0
                 ]);
-                $zipName = str_replace(' ', '-', strtolower($event->event_name.'.zip'));
+                $zipName = str_replace(' ', '-', strtolower($event->event_name.'-'.time().'.zip'));
                 $event->zip_path = $path.DIRECTORY_SEPARATOR.$zipName;
                 $event->save();
                 $this->makeZip($path, $zipName);
@@ -198,8 +199,9 @@ class EventWebController extends Controller
                     $data['event_name']       = $event->event_name;
                     $data['notes']            = $event->event_note ?? 'Harap membawa iuran minimal Rp. 2000';
                     $data['btn_link']         = Crypt::encryptString($member->id.':'.$event->id);
+                    $data['event_category']   = $event->event_category;
                     $fileName                 = $member->member_shortname ?? $member->member_name;
-                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName);
+                    $generatedPdf             = $this->generatePdf($data, $path, $fileNamePrefix.$fileName, $event->event_category);
                     $generatedImage           = $this->generateImage($generatedPdf, $path, $fileNamePrefix.$fileName);
                     unlink($generatedPdf);
 
@@ -214,7 +216,7 @@ class EventWebController extends Controller
                 $event->notification()->create([
                     'status' => 0
                 ]);
-                $zipName = str_replace(' ', '-', strtolower($event->event_name.'.zip'));
+                $zipName = str_replace(' ', '-', strtolower($event->event_name.'-'.time().'.zip'));
                 $event->zip_path = $path.DIRECTORY_SEPARATOR.$zipName;
                 $event->save();
 
@@ -228,8 +230,13 @@ class EventWebController extends Controller
 
     }
 
-    public function generatePdf(array $data, string $path, string $fileName): string {
-        $pdf = Pdf::loadView('admin.template.invitation', ['data' => $data ])->setPaper('a4', 'potrait');
+    public function generatePdf(array $data, string $path, string $fileName, string $eventCategory): string {
+        if($eventCategory == Event::EVENT_CATEGORY_SINOMAN) {
+            $pdf = Pdf::loadView('admin.template.sinoman', ['data' => $data ])->setPaper('a4', 'potrait');
+        } else {
+            $pdf = Pdf::loadView('admin.template.invitation', ['data' => $data ])->setPaper('a4', 'potrait');
+        }
+
         $fullPath = $path.DIRECTORY_SEPARATOR.$fileName.'.pdf';
         $pdf->save($fullPath);
 
