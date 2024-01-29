@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Financial;
 use App\Models\PersonalFinance;
+use App\Models\RefConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -288,13 +289,95 @@ class BotApiController extends Controller
         $event['event_date'] = DateHelper::getDateString($event['event_date']);
         $event['event_start'] = DateHelper::formatTime($event['event_start']);
         $event['event_end'] = DateHelper::formatTime($event['event_end']);
-        
+
         unset($event['members']);
 
         return response()->json([
             'status' => 'success',
             'message' => 'Data Acara',
             'data' => $event
+        ], 200);
+    }
+
+    public function getConfig() {
+        $data = RefConfig::select('key', 'value', 'status') ->where('type', RefConfig::TYPE_FLIPTO) ->get() ->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Config',
+            'data' => $data
+        ], 200);
+    }
+
+    public function addConfig(Request $request){
+        $key = $request->key;
+        $value = $request->value;
+        $status = $request->status;
+
+        $config = RefConfig::where('key', $key)->first();
+
+        if($config) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Config sudah ada'
+            ], 400);
+        }
+
+        $config = new RefConfig();
+        $config->key = $key;
+        $config->value = $value;
+        $config->status = $status;
+        $config->type = RefConfig::TYPE_FLIPTO;
+        $config->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Config berhasil ditambahkan'
+        ], 200);
+    }
+
+    public function deleteConfig(Request $request){
+        $key = $request->key;
+
+        $config = RefConfig::where('key', $key)->first();
+
+        if($config) {
+            $config->delete();
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Config tidak ditemukan'
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Config berhasil dihapus'
+        ], 200);
+    }
+
+
+    public function updateConfig(Request $request) {
+        $key = $request->key;
+        $value = $request->value;
+        $status = $request->status;
+
+        $config = RefConfig::where('key', $key)->first();
+
+        if($config) {
+            $config->value = $value;
+            $config->status = $status;
+            $config->save();
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Config tidak ditemukan'
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Config berhasil diupdate'
         ], 200);
     }
 }

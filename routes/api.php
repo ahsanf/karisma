@@ -34,6 +34,17 @@ Route::group([
         Route::get('/recap', [BotApiController::class, 'getRecapFinanceByYear'])->name('recap');
 
     });
+
+    Route::group([
+        'prefix' => 'flipto',
+        'as' => 'flipto.'
+    ], function() {
+        Route::get('/get-config', [BotApiController::class, 'getConfig'])->name('get-config');
+        Route::post('/update-config', [BotApiController::class, 'updateConfig'])->name('update-config');
+        Route::post('/add-config', [BotApiController::class, 'addConfig'])->name('add-config');
+        Route::post('/delete-config', [BotApiController::class, 'deleteConfig'])->name('delete-config');
+    });
+
     Route::group([
         'prefix' => 'karisma',
         'as' => 'karisma.'
