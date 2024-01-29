@@ -9,10 +9,12 @@ use App\Models\Financial;
 use App\Models\PersonalFinance;
 use App\Models\RefConfig;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class BotApiController extends Controller
 {
+    const SECRET = '@Flipto2024';
     public function getBalance()
     {
         $data['total_income'] = Financial::where('financial_type', 'income')->sum('financial_amount');
@@ -313,6 +315,14 @@ class BotApiController extends Controller
         $key = $request->key;
         $value = $request->value;
         $status = $request->status;
+        $secret = $request->secret;
+
+        if(!$this->validateSecret($secret)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 401);
+        }
 
         $config = RefConfig::where('key', $key)->first();
 
@@ -338,6 +348,14 @@ class BotApiController extends Controller
 
     public function deleteConfig(Request $request){
         $key = $request->key;
+        $secret = $request->secret;
+
+        if(!$this->validateSecret($secret)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 401);
+        }
 
         $config = RefConfig::where('key', $key)->first();
 
@@ -361,6 +379,14 @@ class BotApiController extends Controller
         $key = $request->key;
         $value = $request->value;
         $status = $request->status;
+        $secret = $request->secret;
+
+        if(!$this->validateSecret($secret)){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ], 401);
+        }
 
         $config = RefConfig::where('key', $key)->first();
 
@@ -379,5 +405,10 @@ class BotApiController extends Controller
             'status' => 'success',
             'message' => 'Config berhasil diupdate'
         ], 200);
+    }
+
+    public function validateSecret($key): bool{
+        $decoded = base64_decode($key);
+        return Hash::check(self::SECRET, $decoded);
     }
 }
