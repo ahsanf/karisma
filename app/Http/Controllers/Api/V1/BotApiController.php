@@ -317,7 +317,7 @@ class BotApiController extends Controller
         $status = $request->status;
         $secret = $request->secret;
 
-        if(!$this->validateSecret($secret)){
+        if(!$this->validateSecret($secret) || $secret == null || $secret == ''){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized'
@@ -350,7 +350,7 @@ class BotApiController extends Controller
         $key = $request->key;
         $secret = $request->secret;
 
-        if(!$this->validateSecret($secret)){
+        if(!$this->validateSecret($secret) || $secret == null || $secret == ''){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized'
@@ -381,7 +381,7 @@ class BotApiController extends Controller
         $status = $request->status;
         $secret = $request->secret;
 
-        if(!$this->validateSecret($secret)){
+        if(!$this->validateSecret($secret) || $secret == null || $secret == ''){
             return response()->json([
                 'status' => 'error',
                 'message' => 'Unauthorized'
