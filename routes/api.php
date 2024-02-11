@@ -32,6 +32,7 @@ Route::group([
         Route::get('/get-all', [BotApiController::class, 'getAllPersonalFinance'])->name('get-all');
         Route::get('/get', [BotApiController::class, 'getPersonalFinance'])->name('get');
         Route::get('/recap', [BotApiController::class, 'getRecapFinanceByYear'])->name('recap');
+        Route::get('/ordered', [BotApiController::class, 'getOrderedFinance'])->name('ordered');
 
     });
 
