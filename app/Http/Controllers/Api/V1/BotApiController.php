@@ -9,6 +9,7 @@ use App\Models\Financial;
 use App\Models\PersonalFinance;
 use App\Models\RefConfig;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -410,5 +411,31 @@ class BotApiController extends Controller
     public function validateSecret($key): bool{
         $decoded = base64_decode($key);
         return Hash::check(self::SECRET, $decoded);
+    }
+
+    public function getOrderedFinance(Request $request){
+        $month = $request->month ?? date('m');
+        $year = $request->year ?? date('Y');
+        $finance = PersonalFinance::
+                    select(
+                        'name',
+                        DB::raw('SUM(amount) as amount'),
+                        'month',
+                        'year',
+                        'type',
+                        'date'
+                    )
+                    ->where('month', $month)
+                    ->where('year', $year)
+                    ->groupBy('name', 'month', 'year', 'date', 'type')
+                    ->orderBy('amount', 'desc')
+                    ->get()
+                    ->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Keuangan Bulan '.$this->getIndonesianMonthName($month).' Tahun '.$year,
+            'data' => $finance
+        ], 200);
     }
 }
