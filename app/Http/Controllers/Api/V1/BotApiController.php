@@ -423,11 +423,10 @@ class BotApiController extends Controller
                         'month',
                         'year',
                         'type',
-                        'date'
                     )
                     ->where('month', $month)
                     ->where('year', $year)
-                    ->groupBy('name', 'month', 'year', 'date', 'type')
+                    ->groupBy('name', 'month', 'year', 'type')
                     ->orderBy('amount', 'desc')
                     ->get()
                     ->toArray();
