@@ -416,6 +416,7 @@ class BotApiController extends Controller
     public function getOrderedFinance(Request $request){
         $month = $request->month ?? date('m');
         $year = $request->year ?? date('Y');
+        $type = $request->type ?? 'expense';
         $finance = PersonalFinance::
                     select(
                         'name',
@@ -426,6 +427,7 @@ class BotApiController extends Controller
                     )
                     ->where('month', $month)
                     ->where('year', $year)
+                    ->where('type', $type)
                     ->groupBy('name', 'month', 'year', 'type')
                     ->orderBy('amount', 'desc')
                     ->get()
