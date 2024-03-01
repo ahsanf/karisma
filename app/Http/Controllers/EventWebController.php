@@ -186,7 +186,9 @@ class EventWebController extends Controller
                 $path = Event::getFilePath().DIRECTORY_SEPARATOR.
                         'invitation'.DIRECTORY_SEPARATOR.
                         Str::uuid();
-
+                if(!is_dir($path)){
+                    mkdir($path, 0777, true);
+                }
                 foreach($members as $member){
                     $fileNamePrefix = 'RT '.(string)$member->member_neighborhood.'-';
                     $data['phone_number']     = $member->member_phone;
