@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aecfb84de766fd9f05e7eb4bf942f36b",
+    "content-hash": "068c7db10434f89a478135df5e76ddf8",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -6762,25 +6762,25 @@
         },
         {
             "name": "tucker-eric/eloquentfilter",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Tucker-Eric/EloquentFilter.git",
-                "reference": "faaad783b7f23af7ba7e23baaa56d71af51504a9"
+                "reference": "acbfbe008b8c6b445708493b85a143f7f916c235"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Tucker-Eric/EloquentFilter/zipball/faaad783b7f23af7ba7e23baaa56d71af51504a9",
-                "reference": "faaad783b7f23af7ba7e23baaa56d71af51504a9",
+                "url": "https://api.github.com/repos/Tucker-Eric/EloquentFilter/zipball/acbfbe008b8c6b445708493b85a143f7f916c235",
+                "reference": "acbfbe008b8c6b445708493b85a143f7f916c235",
                 "shasum": ""
             },
             "require": {
-                "illuminate/config": "~6.0|~7.0|~8.0|~9.0|~10.0",
-                "illuminate/console": "~6.0|~7.0|~8.0|~9.0|~10.0",
-                "illuminate/database": "~6.0|~7.0|~8.0|~9.0|~10.0",
-                "illuminate/filesystem": "~6.0|~7.0|~8.0|~9.0|~10.0",
-                "illuminate/pagination": "~6.0|~7.0|~8.0|~9.0|~10.0",
-                "illuminate/support": "~6.0|~7.0|~8.0|~9.0|~10.0",
+                "illuminate/config": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "illuminate/console": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "illuminate/database": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "illuminate/filesystem": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "illuminate/pagination": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "illuminate/support": "~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
                 "php": ">=7.2"
             },
             "require-dev": {
@@ -6821,9 +6821,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Tucker-Eric/EloquentFilter/issues",
-                "source": "https://github.com/Tucker-Eric/EloquentFilter/tree/3.2.0"
+                "source": "https://github.com/Tucker-Eric/EloquentFilter/tree/3.3.0"
             },
-            "time": "2023-02-07T18:34:53+00:00"
+            "time": "2024-02-08T18:03:52+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -70,13 +70,44 @@
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">{{ $data['card_title'] }}</h4>
+                <div class="card-header d-block pb-0 border-0">
+                    <div class="d-sm-flex flex-wrap align-items-center justify-content-between d-block mb-md-3 mb-0">
+                        <div class="basic-form">
+                            <form class="form-inline" method="get">
+                                <div class="form-group mb-3 mr-3">
+                                    <select class="form-control default-select filter-select" name="financial_type" id="filterType">
 
-                    <button data-toggle="modal" data-target="#addFinanceModal" class="btn btn-primary">Tambah Data</button>
+                                        <option disabled @if(empty(Request::get('financial_type')))selected @endif>Filter Tipe</option>
+                                        <option value="income" @if(Request::get('financial_type') == 'income') selected @endif>Pemasukan</option>
+                                        <option value="expense" @if(Request::get('financial_type') == 'expense') selected @endif>Pengeluaran</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3 mr-3">
+                                    <select multiple class="form-control default-select filter-select" name="financial_category_id[]" id="filterCategory">
+                                        @php
+                                            $selected = Request::get('financial_category_id') ?? [];
+                                        @endphp
+                                        @foreach ($data['categories'] as $category)
+                                            <option value="{{ $category['id'] }}" @if(in_array($category['id'], $selected)) selected @endif>{{ $category['category_name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <button data-toggle="tooltip" title="Filter data" type="submit" class="btn rounded btn-primary mb-3 mr-3"><i class="fas fa-filter"></i></button>
+                                @if(!empty(Request::all()))
+                                <a data-toggle="tooltip" title="Reset filter" href="{{ route('admin.finance.index') }}" class="btn rounded btn-danger mb-3 mr-3"><i class="fas fa-undo"></i></a>
+                                @endif
+                            </form>
+
+                        </div>
+
+
+                        <button data-toggle="modal" data-target="#addFinanceModal" class="btn rounded btn-primary mb-3">Tambah Data</button>
+                      </div>
 
                 </div>
                 <div class="card-body">
@@ -267,12 +298,14 @@
             placeholder: "Pilih Kategori",
         });
 
+
         $('#inputFile').onchange = evt => {
         const [file] = imgInp.files
         if (file) {
             imgPreview.src = URL.createObjectURL(file)
             }
         }
+
     } );
 
     function showPreview(event){
@@ -312,6 +345,7 @@
         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
         return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 		}
+
 </script>
 
 @endpush

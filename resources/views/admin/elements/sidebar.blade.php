@@ -51,6 +51,7 @@ Sidebar start
     <ul aria-expanded="false">
         <li><a href="{{ route('admin.financial-category.index') }}">Kategori Finansial</a></li>
         <li><a href="{{ route('admin.user.index') }}">Manajemen Admin</a></li>
+        <li><a href="{{ route('admin.documentation.index') }}">Dokumentasi</a></li>
     </ul>
     </li>
 

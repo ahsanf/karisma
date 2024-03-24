@@ -1,0 +1,592 @@
+body.comingsoon {
+    font-family: "Nunito";
+    background-image: url("../img/landing.png");
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-position-y: 25%;
+    background-size: 42%;
+}
+
+body {
+    font-family: "Nunito" !important;
+    background-color: #fafafa;
+}
+
+.btn {
+    font-family: "Nunito" !important;
+    font-weight: 400;
+}
+
+.btn-link {
+    font-family: "Nunito" !important;
+}
+
+.accordion {
+    font-size: 16px !important;
+}
+
+.unduhan {
+    font-size: small;
+    font-weight: 700;
+    color: #000000;
+}
+
+.unduh {
+    background-color: #0B2A97;
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    font-size: 12px;
+    margin: 4px 8px;
+    transition: 0.3s;
+    border-radius: 10px;
+    border: solid 1px;
+}
+
+.unduh:hover {
+    background-color: white;
+    color: #34395e;
+    border: #f96f33 solid 1px;
+}
+
+.file-thumbnail {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    color: white;
+    border-radius: 6px;
+    background-color: #0B2A97;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 2em;
+}
+
+.empty-state {
+    padding: 80px 0;
+    font-weight: 500;
+    font-size: large;
+}
+
+.empty-state img {
+    width: 20%;
+}
+
+.img-tbnl {
+    width: 80px;
+    height: auto;
+}
+
+.more {
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.accordion {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.card-header {
+    background-color: rgba(255, 255, 255, .03)
+}
+
+.btn-link {
+    font-size: 16px;
+    font-weight: 800;
+    padding-bottom: 10px;
+    color: #000000;
+    text-decoration: none;
+}
+
+.date-news {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #000000;
+    opacity: 0.5;
+    margin-bottom: 30px;
+}
+
+.content h3 a {
+    color: #000000;
+}
+
+.single-service {
+    padding: 20px 20px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+.content button {
+    font-size: 12px;
+    padding: 10px 30px;
+    margin-top: 20px;
+}
+
+.btn-landing {
+    font-family: "Nunito";
+    color: #fff;
+    border-color: #6c757d;
+    background-color: #0B2A97;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height */
+
+    text-align: center;
+}
+
+.btn-landing:hover {
+    color: #34395e;
+    background-color: #fff;
+    border-color: #6c757d;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height */
+
+    text-align: center;
+}
+
+.btn-nav {
+    font-family: "Nunito";
+    color: #fff;
+    border-color: #6c757d;
+    background-color: #0B2A97;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 10px;
+    margin-right: 5px;
+    /* identical to box height */
+
+    text-align: center;
+}
+
+.btn-nav:hover {
+    color: #34395e;
+    background-color: #fff;
+    border-color: #6c757d;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height */
+
+    text-align: center;
+}
+
+.tag {
+    display: inline-block;
+}
+
+.mynavbar {
+    font-size: 16px;
+    font-family: "Nunito";
+    font-weight: 800;
+    background-color: #fff !important;
+}
+
+.banner {
+    height: 100vh;
+}
+
+.btn-coming {
+    padding: 0px 30px;
+    font-size: 16px;
+    font-family: "Nunito";
+    color: #fff;
+    border-color: #6c757d;
+    background-color: #0B2A97;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 0px !important;
+    /* identical to box height */
+
+    text-align: center;
+}
+
+.btn-coming:hover {
+    color: #0B2A97;
+    border-color: #6c757d;
+    background-color: #fff;
+}
+
+.form-control {
+    height: calc(1.5em + 1.5rem + 2px);
+    background-color: #f5f5f5;
+    color: #000000;
+    border-radius: 0px;
+}
+
+.social_icon_list {
+    font-size: 1.4em;
+}
+
+p.up1 {
+    margin-top: 20px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px !important;
+    line-height: 160% !important;
+    /* or 51px */
+
+    letter-spacing: 0.2em;
+
+    color: #34395e;
+}
+
+p.up2 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 64px !important;
+    line-height: 120% !important;
+    letter-spacing: -0.01em;
+    color: #f96f33;
+    background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 10s infinite linear;
+}
+
+@-webkit-keyframes hue {
+    0% {
+        -webkit-filter: hue-rotate(10deg);
+    }
+
+    30% {
+        -webkit-filter: hue-rotate(-30deg);
+    }
+
+    50% {
+        -webkit-filter: hue-rotate(-160deg);
+    }
+
+    80% {
+        -webkit-filter: hue-rotate(-30deg);
+    }
+
+    100% {
+        -webkit-filter: hue-rotate(10deg);
+    }
+}
+
+p.up3 {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px !important;
+    line-height: 160% !important;
+    /* or 38px */
+
+    letter-spacing: 0.01em;
+
+    color: #0B2A97;
+}
+
+p.up4 {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 160%;
+    /* or 38px */
+
+    letter-spacing: 0.01em;
+
+    color: #34395e;
+}
+
+.section-title {
+    color: #0B2A97 !important;
+}
+
+.branch-title {
+    margin-bottom: 10px;
+}
+
+.branch-decs {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 160%;
+    letter-spacing: 0.01em;
+    color: #000000;
+    opacity: 0.5;
+}
+
+.btn-branch {
+    background-color: #0B2A97;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition: 0.3s;
+    border-radius: 10px;
+    border: solid 1px;
+}
+
+.btn-branch:hover {
+    background-color: white;
+    color: #34395e;
+    border: #f96f33 solid 1px;
+}
+
+.btn-detail-secondary {
+    background-color: white;
+    color: #34395e;
+    border: #f96f33 solid 1px;
+}
+
+.btn-detail-secondary:hover {
+    background-color: #eee3ff;
+    border: #f96f33 solid 1px;
+    color: #0B2A97;
+}
+
+.navbar-light .navbar-nav .active>.nav-link {
+    color: #0B2A97;
+    font-weight: 800;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #34395e;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #f96f33;
+}
+
+.nav-item .active {
+    color: #0B2A97 !important;
+}
+
+.border-effect,
+.btn,
+.single-service {
+    border-radius: 10px;
+}
+
+.btn-pelajari {
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    display: inline-block;
+    padding: 14px 30px;
+    transition: 0.3s;
+    /* or 38px */
+
+    letter-spacing: 0.01em;
+    text-decoration-line: underline;
+
+    color: #000000;
+
+    opacity: 0.5;
+}
+
+.btn-pelajari:hover {
+    color: #f96f33;
+    opacity: 1;
+}
+
+.bg-light {
+    background-color: rgba(255, 255, 255, 1) !important;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+    z-index: 2;
+}
+
+.bg-img {
+    background-position-x: 85%;
+}
+
+.banner .banner-images img {
+    width: 90%;
+    margin: 0 auto;
+    position: absolute;
+    z-index: -1;
+    top: -30%;
+}
+
+.galeri {
+    width: 100%;
+    height: auto;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.txt-footer {
+    font-size: 12px;
+    color: white;
+}
+
+.footer {
+    padding-bottom: 20px;
+}
+
+.gl {
+    margin-top: 30px;
+}
+
+.galeri:hover {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+.nav li {
+    display: inline-block;
+}
+
+.list-check {
+    margin-bottom: 50px;
+}
+
+.mb-40 {
+    margin-bottom: 40px;
+}
+
+.rounded-full {
+    border-radius: 12px;
+}
+
+.list-inline {}
+
+.lh-30 {
+    line-height: 30px;
+}
+
+.h-24 {
+    height: 24px;
+}
+
+.update {
+    font-size: 18px;
+    line-height: 1.67;
+}
+
+.card-shadow {
+    box-shadow: 0 5px 10px rgb(0 0 0 / 5%);
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: none;
+    }
+
+    .landing-image {
+        position: fixed;
+        opacity: 0.6;
+        z-index: -1;
+    }
+
+    p.up1 {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px !important;
+        line-height: 160% !important;
+        /* or 51px */
+
+        letter-spacing: 0.2em;
+
+        color: #34395e;
+    }
+
+    p.up2 {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 60px !important;
+        line-height: 120% !important;
+        /* or 144px */
+
+        letter-spacing: -0.01em;
+
+        /* Orange/70 */
+
+        color: #f96f33;
+    }
+
+    p.up3 {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px !important;
+        line-height: 160% !important;
+        /* or 38px */
+
+        letter-spacing: 0.01em;
+
+        color: #34395e;
+    }
+
+    p.up4 {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 160%;
+        /* or 38px */
+
+        letter-spacing: 0.01em;
+
+        color: #34395e;
+    }
+
+    .form-control {
+        height: calc(1.5em + 1.5rem + 2px);
+        background-color: #f5f5f5;
+        color: #000000;
+        border-radius: 0px;
+        font-size: 12px;
+    }
+
+    .btn-coming {
+        font-size: 12px;
+    }
+
+    .btn-coming:hover {
+        font-size: 12px;
+    }
+
+    .banner .banner-images img {
+        opacity: 0.2;
+    }
+
+    .banner {
+        padding-top: 0px;
+    }
+}
+
+@media only screen and (max-width: 800px) and (min-width: 600px) {
+    body {
+        background-image: none;
+    }
+
+    .landing-image {
+        position: fixed;
+        opacity: 0.6;
+        z-index: -1;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    .landing-image {
+        display: none;
+    }
+}
