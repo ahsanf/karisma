@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminWebController;
 use App\Http\Controllers\DashboardWebController;
+use App\Http\Controllers\DocumentationWebController;
 use App\Http\Controllers\EventWebController;
 use App\Http\Controllers\FinancialCategoryWebController;
 use App\Http\Controllers\FinancialWebController;
@@ -206,6 +207,17 @@ Route::group([
         Route::post('/autosave', [NoteWebController::class, 'autosave'])->name('autosave');
     });
 
+    //Documentation
+    Route::group([
+        'prefix' => 'documentation',
+        'as' => 'documentation.'
+    ], function(){
+        Route::get('/', [DocumentationWebController::class, 'index'])->name('index');
+        Route::post('/', [DocumentationWebController::class, 'store'])->name('store');
+        Route::put('/{documentation}/update', [DocumentationWebController::class, 'update'])->name('update');
+        Route::post('/{documentation}/delete', [DocumentationWebController::class, 'destroy'])->name('destroy');
+    });
+
 });
 
 Route::group([
@@ -225,3 +237,8 @@ Route::get('/privacy-policy', function(){
 
 Route::get('/invitation/{key}', [MiscWebController::class, 'invitation'])->name('invitation');
 Route::post('/invitation/{key}', [MiscWebController::class, 'storeInvitation'])->name('storeInvitation');
+
+Route::get('/landing', function(){
+    $event = [];
+    return view('landing.index', compact('event'));
+})->name('landing');

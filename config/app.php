@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         EloquentFilter\ServiceProvider::class,
         ZanySoft\Zip\ZipServiceProvider::class,
+        EloquentFilter\ServiceProvider::class,
 
     ],
 

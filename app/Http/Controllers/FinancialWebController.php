@@ -14,16 +14,27 @@ use Illuminate\Http\UploadedFile;
 class FinancialWebController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $data['action']      = ['table_datatable_basic', 'uc_select2', 'form_pickers'];
         $data['page_title']  = 'Daftar Keuangan';
         $data['card_title']  = 'Keuangan';
         $data['breadcrumbs'] = LayoutHelper::setBreadcrumbs([['name' => 'Keuangan'], ['name' => 'Daftar Keuangan']]);
-        $data['financials']  = Financial::get();
+        $data['financials']  = Financial::filter($request->all())->orderBy('created_at', 'desc')->get();
         $data['categories']  = FinancialCategory::get();
-        $data['total_income'] = Financial::where('financial_type', 'income')->sum('financial_amount');
-        $data['total_expense'] = Financial::where('financial_type', 'expense')->sum('financial_amount');
+        $financialArray = $data['financials']->toArray();
+        $incomeData = array_map(function($item) {
+            if ($item['financial_type'] == 'income') {
+                return $item['financial_amount'];
+            }
+        }, $financialArray);
+        $expenseData = array_map(function($item) {
+            if ($item['financial_type'] == 'expense') {
+                return $item['financial_amount'];
+            }
+        }, $financialArray);
+        $data['total_income'] = array_sum($incomeData);
+        $data['total_expense'] = array_sum($expenseData);
         $data['total_balance'] = $data['total_income'] - $data['total_expense'];
 
         return view('admin.finance.index', compact('data'));

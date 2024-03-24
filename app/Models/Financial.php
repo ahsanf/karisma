@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Helper\DateHelper;
+use App\ModelFilters\FinancialFilter;
+use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Financial extends Model
 {
-    use HasFactory;
+    use HasFactory, Filterable;
 
     protected $table = 'financials';
 
@@ -42,5 +44,10 @@ class Financial extends Model
         $day_name    = DateHelper::getDayName($date);
         $date_string = DateHelper::getDateString($date);
         return $day_name . ', ' . $date_string;
+    }
+
+    public function modelFilter()
+    {
+        return $this->provideFilter(FinancialFilter::class);
     }
 }

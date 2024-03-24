@@ -83,19 +83,17 @@ class NoteWebController extends Controller
         try {
             $data = $request->validated();
             $note->update($data);
-            return R::redirectRouteStatus('admin.note.index', 'success', 'Tag berhasil diupdate');
+            return R::redirectRouteStatus('admin.note.index', 'success', 'Catatan berhasil diupdate');
         } catch (\Throwable $th) {
             return R::redirectBackStatus('error', $th->getMessage());
         }
     }
 
-    public function destroy($id)
+    public function destroy(Note $note)
     {
         try {
-            $note = Note::findOrFail($id);
-            $note->event()->detach();
             $note->delete();
-            return R::redirectRouteStatus('admin.note.index', 'success', 'Tag berhasil dihapus');
+            return R::redirectRouteStatus('admin.note.index', 'success', 'Catatan berhasil dihapus');
         } catch (\Throwable $th) {
             return R::redirectBackStatus('error', $th->getMessage());
         }
