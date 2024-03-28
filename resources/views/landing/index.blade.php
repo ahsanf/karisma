@@ -24,7 +24,7 @@
             <div class="container pt-5 pb-5">
                 <div class="row">
                     <div class="col-md-6">
-                        <h3 class="pt-2 pb-2"><b>Karisma ?</b></h3>
+                        <h3 class="pt-2 pb-2"><b>Apa itu Karisma</b></h3>
                         <p>
                             Karisma (Keluarga Remaja Masjid Al Muttaqin) adalah organisasi pemuda non-profit di
                             Desa Kemirisewu yang menjadi wadah bagi remaja dan pemuda desa untuk berkarya dan mengembangkan potensi diri.
