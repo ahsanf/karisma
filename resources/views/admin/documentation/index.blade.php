@@ -91,8 +91,8 @@
     </div>
 </div>
 
-@foreach ($data['documentations'] as $category )
-<div class="modal fade" id="editDocumentation-{{ $category['id'] }}" style="display: none;" aria-modal="true">
+@foreach ($data['documentations'] as $item )
+<div class="modal fade" id="editDocumentation-{{ $item['id'] }}" style="display: none;" aria-modal="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -101,23 +101,23 @@
             </button>
         </div>
         <div class="modal-body">
-            <form id="single-upload"action="{{ route('admin.documentation.update', ['documentation' => $category]) }}" method="post" enctype="multipart/form-data">
+            <form id="single-upload"action="{{ route('admin.documentation.update', ['documentation' => $item]) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="basic-form">
                         <div class="form-group">
                             <label class="text-label">Nama</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Nama" name="name" value="{{ $category['name'] }}" required>
+                            <input type="text" class="form-control" placeholder="Masukkan Nama" name="name" value="{{ $item['name'] }}" required>
                         </div>
 
                         <div class="form-group">
                             <label class="text-label">Url</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Url" name="name" value="{{ $category['url'] }}" required>
+                            <input type="text" class="form-control" placeholder="Masukkan Url" name="name" value="{{ $item['url'] }}" required>
                         </div>
 
                         <div class="form-group">
                             <label class="text-label">Tanggal</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Tanggal" name="name" value="{{ $category['date'] }}" required>
+                            <input type="text" class="form-control" placeholder="Masukkan Tanggal" name="name" value="{{ $item['date'] }}" required>
                         </div>
                 </div>
         </div>
