@@ -263,7 +263,7 @@ body {
   line-height: 1.5;
   color: #7e7e7e;
   text-align: left;
-  background-color: #F9F9F9; }
+  background-color: white; }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -534,6 +534,13 @@ h6, .h6 {
   font-weight: 300;
   line-height: 1.2; }
 
+  .logo-brand{
+    background: url(../images/logo-full.svg);
+    background-size: cover;
+    width:150px;
+    height:36px;
+
+}
 .display-2 {
   font-size: 5.5rem;
   font-weight: 300;

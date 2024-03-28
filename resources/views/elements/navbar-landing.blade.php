@@ -33,7 +33,6 @@
 
         </ul>
         <div class="form-inline my-2 my-lg-0">
-            <a class="btn btn-branch-secondary" href="{{ route('register') }}">Buat Akun</a>
             <a class="btn btn-branch" href="{{ route('login') }}">Masuk</a>
         </div>
     </div>

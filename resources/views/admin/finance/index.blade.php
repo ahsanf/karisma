@@ -88,6 +88,20 @@
                                 </div>
 
                                 <div class="form-group mb-3 mr-3">
+                                    <select class="form-control default-select filter-select" name="financial_year" id="filterType">
+
+                                        <option disabled @if(empty(Request::get('financial_year')))selected @endif>Filter Tahun</option>
+                                        @php
+                                            $years = [2021, 2022, 2023, 2024];
+                                        @endphp
+                                        @foreach ($years as $item)
+                                        <option value="{{ $item }}" @if(Request::get('financial_year') == $item) selected @endif>{{ $item }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3 mr-3">
                                     <select multiple class="form-control default-select filter-select" name="financial_category_id[]" id="filterCategory">
                                         @php
                                             $selected = Request::get('financial_category_id') ?? [];

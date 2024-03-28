@@ -11,7 +11,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.png') }}">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-
+    @if (!empty(config('dz.public.pagelevel.css.uc_toastr')))
+        @foreach (config('dz.public.pagelevel.css.uc_toastr') as $style)
+            <link href="{{ asset($style) }}" rel="stylesheet" type="text/css" />
+        @endforeach
+    @endif
 </head>
 
 <body class="h-100">
@@ -23,7 +27,6 @@
         </div>
     </div>
 @include('elements.footer-scripts')
-{!! Toastr::message() !!}
 </body>
-
+{!! Toastr::message() !!}
 </html>

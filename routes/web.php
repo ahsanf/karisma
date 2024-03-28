@@ -6,6 +6,7 @@ use App\Http\Controllers\DocumentationWebController;
 use App\Http\Controllers\EventWebController;
 use App\Http\Controllers\FinancialCategoryWebController;
 use App\Http\Controllers\FinancialWebController;
+use App\Http\Controllers\LandingWebController;
 use App\Http\Controllers\MemberWebController;
 use App\Http\Controllers\Misc\MiscWebController;
 use App\Http\Controllers\NoteWebController;
@@ -23,11 +24,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return redirect('/admin/auth/login');
-});
-
 
 // Route::get('/', 'App\Http\Controllers\GymoveadminController@dashboard_1');
 Route::get('/index', 'App\Http\Controllers\GymoveadminController@dashboard_1');
@@ -238,7 +234,10 @@ Route::get('/privacy-policy', function(){
 Route::get('/invitation/{key}', [MiscWebController::class, 'invitation'])->name('invitation');
 Route::post('/invitation/{key}', [MiscWebController::class, 'storeInvitation'])->name('storeInvitation');
 
-Route::get('/landing', function(){
-    $event = [];
-    return view('landing.index', compact('event'));
-})->name('landing');
+Route::group([
+    'as' => 'landing.'
+], function(){
+    Route::get('/', [LandingWebController::class, 'index'])->name('index');
+    Route::get('/finance', [LandingWebController::class, 'finance'])->name('finance');
+    Route::get('/documentation', [LandingWebController::class, 'documentationIndex'])->name('documentation');
+});

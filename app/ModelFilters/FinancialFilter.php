@@ -24,5 +24,10 @@ class FinancialFilter extends ModelFilter
         return $this->where('financial_type', $financialType);
     }
 
+    public function financialYear($financialYear)
+    {
+        return $this->whereYear('financial_date', $financialYear);
+    }
+
 
 }
