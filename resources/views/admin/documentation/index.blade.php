@@ -30,8 +30,8 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['name'] }}</td>
-                            <td>{{ $item['url'] }}</td>
-                            <td>{{ $item['date'] }}</td>
+                            <td><a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferer">{{ $item['url'] }}</a></td>
+                            <td>{{ $item->dateString($item->date) }}</td>
                             <td>
                                 <div class="row d-flex justify-content-center">
                                     <span data-toggle="tooltip" title="Edit">
@@ -40,7 +40,7 @@
                                     </span>
 
                                     <span data-toggle="tooltip" title="Hapus">
-                                        <button onclick="sweetConfirm(`documentation/{{ $item['id'] }}/delete`, 'Kategori')" class="btn btn-danger shadow btn-xs sharp mr-1"><i class="fas fa-trash"></i></button>
+                                        <button onclick="sweetConfirm(`documentation/{{ $item['id'] }}/delete`, 'Dokumentasi')" class="btn btn-danger shadow btn-xs sharp mr-1"><i class="fas fa-trash"></i></button>
                                     </span>
                                 </div>
                             </td>
@@ -78,7 +78,7 @@
 
                         <div class="form-group">
                             <label class="text-label">Tanggal</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Tanggal" id="mdate">
+                            <input type="text" class="form-control" placeholder="Masukkan Tanggal" name="date" id="mdate">
                         </div>
                 </div>
         </div>

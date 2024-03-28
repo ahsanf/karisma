@@ -43,7 +43,7 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $item['name'] }}</td>
-                            <td class="text-center"><a href="{{ $item->url }}">{{ $item->url }}</a></td>
+                            <td class="text-center"><a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferer">{{ $item['url'] }}</a></td>
                             <td class="text-center">{{ $item->dateString($item->date) }}</td>
 
                         </tr>
