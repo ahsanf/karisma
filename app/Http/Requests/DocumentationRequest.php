@@ -44,6 +44,7 @@ class DocumentationRequest extends FormRequest
         return [
             'name' => 'required|string',
             'url' => 'required|string',
+            'date' => 'required|string'
         ];
     }
 }

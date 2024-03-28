@@ -18,7 +18,7 @@ class NoteWebController extends Controller
         $data['action']     = ['table_datatable_basic', 'uc_select2'];
         $data['page_title'] = 'Semua Catatan';
         $data['card_title'] = 'Catatan';
-        $data['notes']      = Note::with('event')->get();
+        $data['notes']      = Note::orderByDesc('created_at')->with('event')->get();
         $data['breadcrumbs'] = LayoutHelper::setBreadcrumbs([['name' => 'Catatan'], ['name' => 'Daftar Catatan']]);
 
         return view('admin.note.index', compact('data'));
