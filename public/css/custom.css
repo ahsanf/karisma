@@ -1,0 +1,39 @@
+.linear-wipe {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 64px !important;
+    line-height: 135% !important;
+    letter-spacing: -0.01em;
+    color: #f96f33;
+    background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 10s infinite linear;
+}
+
+.c1-bg {
+    background-color:#0B2A97 !important;
+    padding: 40px !important;
+}
+
+@-webkit-keyframes hue {
+    0% {
+        -webkit-filter: hue-rotate(10deg);
+    }
+
+    30% {
+        -webkit-filter: hue-rotate(-10deg);
+    }
+
+    80% {
+        -webkit-filter: hue-rotate(-10deg);
+    }
+
+    100% {
+        -webkit-filter: hue-rotate(10deg);
+    }
+}
+
+
+

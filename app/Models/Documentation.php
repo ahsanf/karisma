@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helper\DateHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,4 +16,11 @@ class Documentation extends Model
         'url',
         'date'
     ];
+
+    public function dateString($date)
+    {
+        $day_name    = DateHelper::getDayName($date);
+        $date_string = DateHelper::getDateString($date);
+        return $day_name . ', ' . $date_string;
+    }
 }

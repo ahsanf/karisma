@@ -34,7 +34,7 @@
     <link href="{{ asset($style) }}" rel="stylesheet" type="text/css" />
     @endforeach
     @endif
-
+    @stack('stylesheet')
 
 </head>
 
