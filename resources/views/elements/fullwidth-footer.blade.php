@@ -31,16 +31,13 @@
                 <div>
                     <ul class="nav" >
                         <li class="nav-item">
-                            <a class="nav-link" style="color:white !important;"href="#tentang">Tentang</a>
+                            <a class="nav-link page-scroll" style="color:white !important;"href="{{ route('landing.finance') }}">Keuangan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" style="color:white !important;"href="#info">Keuangan</a>
+                            <a class="nav-link page-scroll" style="color:white !important;"href="{{ route('landing.documentation') }}">Dokumentasi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link page-scroll" style="color:white !important;"href="#faq">Galeri</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link page-scroll" style="color:white !important;"href="#unduhan">Blog</a>
+                            <a class="nav-link page-scroll" style="color:white !important;"href="{{ route('login') }}">Masuk</a>
                         </li>
                     </ul>
                 </div>
