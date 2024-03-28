@@ -112,12 +112,12 @@
 
                         <div class="form-group">
                             <label class="text-label">Url</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Url" name="name" value="{{ $item['url'] }}" required>
+                            <input type="text" class="form-control" placeholder="Masukkan Url" name="url" value="{{ $item['url'] }}" required>
                         </div>
 
                         <div class="form-group">
                             <label class="text-label">Tanggal</label>
-                            <input type="text" class="form-control" placeholder="Masukkan Tanggal" name="name" value="{{ $item['date'] }}" required>
+                            <input type="text" id="mdate" class="form-control" placeholder="Masukkan Tanggal" name="date" value="{{ $item['date'] }}" required>
                         </div>
                 </div>
         </div>
