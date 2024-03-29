@@ -27,6 +27,7 @@
     @endforeach
     @endif
     <link rel="stylesheet" href="{{ asset('landing/css/landing-font-awesome.min.css') }}" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 </head>
 @include('elements.fullwidth-header')
 <div id="preloader">

@@ -57,5 +57,114 @@
 
                 </div>
             </div>
+
+            <hr>
+
+            <div class="container pt-5">
+                <div class="d-flex justify-content-center mb-20 mt-20">
+                    <h2><b>STATISTIK</b></h2>
+                </div>
+            </div>
+
+            <div class="container pt-5 ">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-danger">
+                          <div class="card-body  p-4">
+                            <div class="media">
+                              <span class="mr-3">
+                                <i class="flaticon-381-calendar-1"></i>
+                              </span>
+                              <div class="media-body text-white text-right">
+                                <p class="mb-1">Acara</p>
+                                <h3 class="text-white">{{ $data['event_count'] }}</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-4 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-success">
+                          <div class="card-body p-4">
+                            <div class="media">
+                              <span class="mr-3">
+                                <i class="flaticon-381-diamond"></i>
+                              </span>
+                              <div class="media-body text-white text-right">
+                                <p class="mb-1">Pemasukan</p>
+                                <h3 class="text-white">{{ "Rp " . number_format($data['financial_count'],0,',','.') }}</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-xl-4 col-lg-6 col-sm-6">
+                        <div class="widget-stat card bg-primary">
+                          <div class="card-body p-4">
+                            <div class="media">
+                              <span class="mr-3">
+                                <i class="flaticon-381-user-7"></i>
+                              </span>
+                              <div class="media-body text-white text-right">
+                                <p class="mb-1">Anggota</p>
+                                <h3 class="text-white">{{ $data['member_count'] }}</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="container pt-5">
+                <div class="d-flex justify-content-center mb-20 mt-20">
+                    <h2><b>GALERI</b></h2>
+                </div>
+            </div>
+
+            <div class="container pt-5 pb-5">
+                <div class="d-flex justify-content-center mb-20 mt-20">
+                <div class="row">
+
+                    @for ($i = 1; $i <= 8; $i++)
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb d-flex align-items-center justify-content-center pt-2">
+                        <a id="inline" href="{{ asset('images/gallery_'.$i.'.jpg') }}" class="fancybox" rel="ligthbox">
+                            <img  src="{{ asset('images/gallery_'.$i.'.jpg') }}" class="zoom img-fluid " style="max-height:147px;"  alt="">
+                        </a>
+                    </div>
+                    @endfor
+
+               </div>
+            </div>
+            <div class="container pt-4 pb-5">
+                <div class="d-flex justify-content-center mb-20 mt-20">
+                    <a href="{{ route('landing.documentation') }}" class="btn btn-primary">Selengkapnya</a>
+                </div>
+            </div>
+
+
+
     </div>
 @endsection
+@push('custom_js')
+<script>
+    $(document).ready(function(){
+        $(".fancybox").fancybox({
+            openEffect: "none",
+            closeEffect: "none"
+        });
+
+        $(".zoom").hover(function(){
+
+            $(this).addClass('transition');
+        }, function(){
+
+            $(this).removeClass('transition');
+        });
+    });
+
+</script>
+
+@endpush
