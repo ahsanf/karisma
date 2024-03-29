@@ -8,14 +8,14 @@
 </div>
 <div class="container pt-5 pb-5">
     <div class="row">
-        <div class="col">
+        <div class="col-md-6 col-xl-6 col-sm-12 col-xs-12">
             <p>
                 Di Karisma, kami menjunjung tinggi prinsip transparansi dan akuntabilitas dalam pengelolaan keuangan organisasi.
                 Sebagai organisasi non profit, kami mengandalkan dukungan donasi dari para dermawan dan masyarakat.
                 Oleh karena itu, kami berkomitmen untuk memastikan setiap rupiah yang diterima digunakan secara bertanggung jawab untuk mendukung program-program kami.
             </p>
         </div>
-        <div class="col">
+        <div class="col-md-6 col-xl-6 col-sm-12 col-xs-12">
             <img src="{{ asset('landing/img/video_opini.png') }}" alt="" class="img-fluid">
         </div>
     </div>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Helper\LayoutHelper;
 use App\Models\Documentation;
+use App\Models\Event;
 use App\Models\Financial;
 use App\Models\FinancialCategory;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class LandingWebController extends Controller
@@ -14,6 +16,11 @@ class LandingWebController extends Controller
         $event = [];
         $data['page_title']  = 'Beranda';
         $data['action'] = ['table_datatable_basic', 'uc_select2', 'form_pickers'];
+        $data['event_count'] = Event::count() + 10;
+        $data['member_count'] = Member::count();
+        $data['financial_count'] = Financial::where('financial_type', 'income')->sum('financial_amount');
+        $data['documentation_count'] = Documentation::count();
+
         return view('landing.index', compact('event', 'data'));
     }
 
