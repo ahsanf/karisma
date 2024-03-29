@@ -25,13 +25,13 @@
                         @csrf
 
                         <div class="form-group">
-                            <label class="text-label">Email</label>
+                            <label class="text-label">Email / Username</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                                 </div>
                                 <input type="text" class="form-control" id="val-email" name="email"
-                                    placeholder="Enter Your Email">
+                                    placeholder="Masukkan email atau username">
                             </div>
                         </div>
                         <div class="form-group">
@@ -42,8 +42,8 @@
                                 </div>
                                 <input type="password" class="form-control" id="dz-password" name="password"
                                     placeholder="Enter Your Password">
-                                <div class="input-group-append show-pass ">
-                                    <span class="input-group-text ">
+                                <div class="input-group-append show-pass">
+                                    <span class="input-group-text" id="showPass">
                                         <i class="fa fa-eye-slash"></i>
                                         <i class="fa fa-eye"></i>
                                     </span>
@@ -72,13 +72,16 @@
 @endsection
 @push('custom_js')
 <script>
-    $('.show-pass').on('click',function(){
-        $(this).toggleClass('active');
-        if($('#dz-password').attr('type') == 'password'){
-            $('#dz-password').attr('type','text');
-        }else if($('#dz-password').attr('type') == 'text'){
-            $('#dz-password').attr('type','password');
-        }
+    $(document).ready(function(){
+        $('#showPass').on('click',function(){
+            $(this).toggleClass('active');
+            if($('#dz-password').attr('type') === 'password'){
+                $('#dz-password').attr('type','text');
+            }else if($('#dz-password').attr('type') === 'text'){
+                $('#dz-password').attr('type','password');
+            }
+        });
     });
+
 </script>
 @endpush
