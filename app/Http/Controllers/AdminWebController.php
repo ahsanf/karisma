@@ -52,7 +52,7 @@ class AdminWebController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => ['required', 'string'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+                'email' => ['required', 'string', 'max:50'],
                 'password' => ['nullable', 'string', 'min:6', 'confirmed'],
             ]);
 

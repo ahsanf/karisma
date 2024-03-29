@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label class="text-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Fill Email" name="email">
+                        <input type="text" class="form-control" placeholder="Fill Email" name="email">
                     </div>
 
                     <div class="form-row">
