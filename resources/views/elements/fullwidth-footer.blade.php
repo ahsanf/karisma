@@ -1,7 +1,7 @@
 <footer class="footer-bg" style="background-color: #0B2A97;color:white !important;">
     <div class="container p-5">
         <div class="row">
-            <div class="col-lg-6 col-sm-6">
+            <div class="col-lg-6 col-sm-12 col-xs-12">
                 <div class="widget widget_about">
                     <div class="widget-logo">
                         <img src="{{ asset('images/logo-white.svg') }}" data-rjs="2" alt="" />
@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-6 col-sm-6 d-flex align-items-center justify-content-end">
+            <div class="col-lg-6 col-sm-12 col-xs-12 d-flex align-items-center justify-content-end">
                 <div>
                     <ul class="nav" >
                         <li class="nav-item">
