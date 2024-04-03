@@ -470,7 +470,7 @@ class BotApiController extends Controller
     }
 
     public function getKarismaFinanceRecap(Request $request) {
-        $financials = Financial::select('financial_amount', 'financial_type')
+        $financials = Financial::select('financial_amount', 'financial_type', 'financial_category_id')
         ->filter($request->all())
         ->with('category')
         ->orderBy('created_at', 'desc')->get();
@@ -489,12 +489,11 @@ class BotApiController extends Controller
         $totalIncome = array_sum($incomeData);
         $totalExpense = array_sum($expenseData);
         $totalBalance = $totalIncome - $totalExpense;
-        $categoryName = $financials->groupBy('category.category_name');
 
         return response()->json([
             'status' => 'success',
             'data' => [
-                'category' => $categoryName,
+                'category' => $financials->first()->category->category_name,
                 'total_income' => $totalIncome,
                 'total_expense' => $totalExpense,
                 'total_balance' => $totalBalance
