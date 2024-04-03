@@ -53,5 +53,6 @@ Route::group([
         Route::get('/get-events', [BotApiController::class, 'getEvents'])->name('get-events');
         Route::get('/get-balance', [BotApiController::class, 'getBalance'])->name('get-balance');
         Route::get('/get-event-member',[BotApiController::class, 'getEventMembers'])->name('get-event-member');
+        Route::post('/store-financial', [BotApiController::class, 'storeFinancial'])->name('store-financial');
     });
 });
