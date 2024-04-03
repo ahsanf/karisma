@@ -446,4 +446,26 @@ class BotApiController extends Controller
             'data' => $finance
         ], 200);
     }
+
+    public function storeFinancial(Request $request){
+        $type = $request->type;
+        $amount = $request->amount;
+        $name = $request->name;
+        $financialCategory = $request->category;
+
+        Financial::create([
+            'financial_name' => $name,
+            'financial_date' => date('Y-m-d'),
+            'financial_amount' => $amount,
+            'financial_type' => $type,
+            'financial_category_id' => $financialCategory
+        ]);
+
+        $format = 'Rp. '. number_format($amount, 0, ',', '.');
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Keuangan '.$name.' sebesar '.$format.' berhasil ditambahkan',
+        ], 200);
+    }
 }
