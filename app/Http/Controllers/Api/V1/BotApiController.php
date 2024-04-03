@@ -468,4 +468,34 @@ class BotApiController extends Controller
             'message' => 'Data Keuangan '.$name.' sebesar '.$format.' berhasil ditambahkan',
         ], 200);
     }
+
+    public function getKarismaFinanceRecap(Request $request) {
+        $financials = Financial::select('financial_amount', 'financial_type')
+        ->filter($request->all())
+        ->orderBy('created_at', 'desc')->get();
+        $incomeData = array_map(function($item) {
+            if ($item['financial_type'] == 'income') {
+                return $item['financial_amount'];
+            }
+        }, $financials->toArray());
+
+        $expenseData = array_map(function($item) {
+            if ($item['financial_type'] == 'expense') {
+                return $item['financial_amount'];
+            }
+        }, $financials->toArray());
+
+        $totalIncome = array_sum($incomeData);
+        $totalExpense = array_sum($expenseData);
+        $totalBalance = $totalIncome - $totalExpense;
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'total_income' => $totalIncome,
+                'total_expense' => $totalExpense,
+                'total_balance' => $totalBalance
+            ]
+        ], 200);
+    }
 }

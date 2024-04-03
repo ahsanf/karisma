@@ -54,5 +54,6 @@ Route::group([
         Route::get('/get-balance', [BotApiController::class, 'getBalance'])->name('get-balance');
         Route::get('/get-event-member',[BotApiController::class, 'getEventMembers'])->name('get-event-member');
         Route::post('/store-financial', [BotApiController::class, 'storeFinancial'])->name('store-financial');
+        Route::get('/get-financial-recap', [BotApiController::class, 'getKarismaFinanceRecap'])->name('get-financial-recap');
     });
 });
