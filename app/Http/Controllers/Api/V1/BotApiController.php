@@ -6,6 +6,7 @@ use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Financial;
+use App\Models\FinancialCategory;
 use App\Models\PersonalFinance;
 use App\Models\RefConfig;
 use Illuminate\Http\Request;
@@ -498,6 +499,16 @@ class BotApiController extends Controller
                 'total_expense' => $totalExpense,
                 'total_balance' => $totalBalance
             ]
+        ], 200);
+    }
+
+    public function getFinancialCategory(Request $request){
+        $categories = FinancialCategory::select('id', 'category_name')->get()->toArray();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Kategori Keuangan',
+            'data' => $categories
         ], 200);
     }
 }
