@@ -448,6 +448,40 @@ class BotApiController extends Controller
         ], 200);
     }
 
+    public function getRecapToday(Request $request){
+        $today = $request->date != null ? $request->date : date('Y-m-d');
+        $finance = PersonalFinance::select('name', 'amount', 'type')
+                    ->where('date', $today)
+                    ->get()
+                    ->toArray();
+
+        $incomeData = array_map(function($item) {
+            if ($item['type'] == 'income') {
+                return $item['amount'];
+            }
+        }, $finance);
+
+        $expenseData = array_map(function($item) {
+            if ($item['type'] == 'expense') {
+                return $item['amount'];
+            }
+        }, $finance);
+
+        $totalIncome = array_sum($incomeData);
+        $totalExpense = array_sum($expenseData);
+        $totalBalance = $totalIncome - $totalExpense;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Rekap Keuangan Hari - '.date('d' ).' '. $this->getIndonesianMonthName(date('m')).' '.date('Y'),
+            'data' => [
+                'total_income' => $totalIncome,
+                'total_expense' => $totalExpense,
+                'total_balance' => $totalBalance
+            ]
+        ], 200);
+    }
+
     public function storeFinancial(Request $request){
         $type = $request->type;
         $amount = $request->amount;

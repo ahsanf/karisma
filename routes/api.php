@@ -33,6 +33,7 @@ Route::group([
         Route::get('/get', [BotApiController::class, 'getPersonalFinance'])->name('get');
         Route::get('/recap', [BotApiController::class, 'getRecapFinanceByYear'])->name('recap');
         Route::get('/ordered', [BotApiController::class, 'getOrderedFinance'])->name('ordered');
+        Route::get('/recap-today', [BotApiController::class, 'getRecapToday'])->name('recap-today');
 
     });
 
@@ -56,5 +57,6 @@ Route::group([
         Route::post('/store-financial', [BotApiController::class, 'storeFinancial'])->name('store-financial');
         Route::get('/get-financial-recap', [BotApiController::class, 'getKarismaFinanceRecap'])->name('get-financial-recap');
         Route::get('/get-financial-category', [BotApiController::class, 'getFinancialCategory'])->name('get-financial-category');
+
     });
 });
