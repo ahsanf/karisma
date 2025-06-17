@@ -158,7 +158,7 @@
                             </td>
                             <td class="text-center">
                                 <span class="badge badge-primary light">
-                                    {{ $item['category']['category_name'] }}
+                                    {{ $item['category'] !== null ? $item['category']['category_name'] : 'Tidak ada kategori' }}
                                 </span>
                             </td>
                             <td>
