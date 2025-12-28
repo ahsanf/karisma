@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\BotApiController;
+use App\Http\Controllers\Api\V1\InvitationApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::group([
     'prefix'=> 'v1',
     'as' => 'api.'
 ], function(){
+
+    Route::get('/invitation/{code}', [InvitationApiController::class, 'getByCode'])->name('invitation.get-by-code');
 
     Route::group([
         'prefix' => 'personal-finance',
