@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code')->unique();
+            $table->string('name',64);
+            $table->string('code', 10)->unique();
             $table->string('phone')->unique();
+            $table->text('note')->nullable();
+            $table->enum('status', ['ATTENDING', 'NOT_ATTENDING', 'MAYBE'])->nullable();
             $table->timestamps();
         });
     }

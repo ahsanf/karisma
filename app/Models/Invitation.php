@@ -14,8 +14,10 @@ class Invitation extends Model
     protected $fillable = [
         'name',
         'code',
-        'phone'
+        'phone',
+        'is_attended',
+        'wish_name',
     ];
 
-    
+
 }
