@@ -34,6 +34,7 @@ class InvitationApiController extends Controller
             $invitation->wish_name = $payload['wish_name'] ?? null;
             $invitation->status = $status;
             $invitation->note = $payload['note'] ?? null;
+            $invitation->count = $payload['count'] ?? null;
             $invitation->save();
 
             return response()->json([
@@ -55,6 +56,33 @@ class InvitationApiController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $invitations
+        ], 200);
+    }
+
+    public function getStatusCount(Request $request)
+    {
+        $attending = Invitation::where('status', 'ATTENDING')->count();
+        $notAttending = Invitation::where('status', 'NOT ATTENDING')->count();
+        $maybe = Invitation::where('status', 'MAYBE')->count();
+
+        $attendingPersons = Invitation::where('status', 'ATTENDING')->sum('count');
+        $notAttendingPersons = Invitation::where('status', 'NOT ATTENDING')->sum('count');
+        $maybePersons = Invitation::where('status', 'MAYBE')->sum('count');
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'ATTENDING' => $attending,
+                'NOT_ATTENDING' => $notAttending,
+                'MAYBE' => $maybe,
+                'total' => $attending + $notAttending + $maybe,
+                'person_count' => [
+                    'ATTENDING' => $attendingPersons,
+                    'NOT_ATTENDING' => $notAttendingPersons,
+                    'MAYBE' => $maybePersons,
+                    'total' => $attendingPersons + $notAttendingPersons + $maybePersons
+                ]
+            ]
         ], 200);
     }
 }

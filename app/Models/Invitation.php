@@ -17,6 +17,9 @@ class Invitation extends Model
         'phone',
         'is_attended',
         'wish_name',
+        'note',
+        'status',
+        'count'
     ];
 
 

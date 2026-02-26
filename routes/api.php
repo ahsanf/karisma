@@ -28,6 +28,7 @@ Route::group([
     Route::get('/invitation/{code}', [InvitationApiController::class, 'getByCode'])->name('invitation.get-by-code');
     Route::put('/invitation/{code}/attend', [InvitationApiController::class, 'markAttend'])->name('invitation.mark-as-attended');
     Route::get('/invitations/wishes', [InvitationApiController::class, 'getWishes'])->name('invitation.get-wishes');
+    Route::get('/invitations/status-count', [InvitationApiController::class, 'getStatusCount'])->name('invitation.get-status-count');
 
     Route::group([
         'prefix' => 'personal-finance',
