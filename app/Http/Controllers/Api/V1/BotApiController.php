@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Helper\DateHelper;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Financial;
 use App\Models\FinancialCategory;
@@ -37,11 +38,13 @@ class BotApiController extends Controller
         $validate = Validator::make($request->all(),[
             'name' => 'required',
             'amount' => 'required',
-            'type' => 'required'
+            'type' => 'required',
+            'date' => 'nullable|date_format:Y-m-d'
         ], [
             'name.required' => 'Nama tidak boleh kosong',
             'amount.required' => 'Jumlah tidak boleh kosong',
-            'type.required' => 'Tipe tidak boleh kosong'
+            'type.required' => 'Tipe tidak boleh kosong',
+            'date.date_format' => 'Format tanggal harus YYYY-MM-DD'
         ]);
 
         if($validate->fails()){
@@ -51,13 +54,15 @@ class BotApiController extends Controller
             ], 400);
         }
 
+        $date = $request->date ? Carbon::createFromFormat('Y-m-d', $request->date) : now();
+
         $financial = new PersonalFinance();
         $financial->name = $request->name;
         $financial->amount = $request->amount;
         $financial->type = $request->type;
-        $financial->date = date('Y-m-d');
-        $financial->month = date('m');
-        $financial->year = date('Y');
+        $financial->date = $date->format('Y-m-d');
+        $financial->month = $date->format('m');
+        $financial->year = $date->format('Y');
         $financial->save();
 
         if($request->type == 'income'){
