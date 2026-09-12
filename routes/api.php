@@ -40,6 +40,9 @@ Route::group([
         Route::get('/recap', [BotApiController::class, 'getRecapFinanceByYear'])->name('recap');
         Route::get('/ordered', [BotApiController::class, 'getOrderedFinance'])->name('ordered');
         Route::get('/recap-today', [BotApiController::class, 'getRecapToday'])->name('recap-today');
+        Route::get('/list', [BotApiController::class, 'listPersonalFinance'])->name('list');
+        Route::put('/update/{id}', [BotApiController::class, 'updatePersonalFinance'])->name('update');
+        Route::delete('/delete/{id}', [BotApiController::class, 'deletePersonalFinance'])->name('delete');
 
     });
 

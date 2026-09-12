@@ -453,6 +453,99 @@ class BotApiController extends Controller
         ], 200);
     }
 
+    public function listPersonalFinance(Request $request)
+    {
+        $month = $request->month ?? date('m');
+        $year = $request->year ?? date('Y');
+        $type = $request->type;
+        $search = $request->search ?? '';
+
+        if($type == null || $type == ''){
+            $filterType = ['income', 'expense'];
+        } else {
+            $filterType = [$type];
+        }
+
+        $finance = PersonalFinance::select('id', 'name', 'amount', 'date', 'month', 'year', 'type')
+                    ->where('month', $month)
+                    ->where('year', $year)
+                    ->whereIn('type', $filterType)
+                    ->where('name', 'LIKE', '%'.$search.'%')
+                    ->orderBy('date', 'desc')
+                    ->orderBy('id', 'desc')
+                    ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data Transaksi Bulan '.$this->getIndonesianMonthName($month).' Tahun '.$year,
+            'data' => $finance
+        ], 200);
+    }
+
+    public function updatePersonalFinance(Request $request, $id)
+    {
+        $validate = Validator::make($request->all(), [
+            'name' => 'required',
+            'amount' => 'required',
+            'type' => 'required',
+            'date' => 'nullable|date_format:Y-m-d'
+        ], [
+            'name.required' => 'Nama tidak boleh kosong',
+            'amount.required' => 'Jumlah tidak boleh kosong',
+            'type.required' => 'Tipe tidak boleh kosong',
+            'date.date_format' => 'Format tanggal harus YYYY-MM-DD'
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => 'error',
+                'message' => $validate->errors()->all()
+            ], 400);
+        }
+
+        $financial = PersonalFinance::find($id);
+        if(!$financial){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Transaksi tidak ditemukan'
+            ], 404);
+        }
+
+        $date = $request->date ? Carbon::createFromFormat('Y-m-d', $request->date) : Carbon::parse($financial->date);
+
+        $financial->name = $request->name;
+        $financial->amount = $request->amount;
+        $financial->type = $request->type;
+        $financial->date = $date->format('Y-m-d');
+        $financial->month = $date->format('m');
+        $financial->year = $date->format('Y');
+        $financial->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Transaksi berhasil diperbarui',
+            'data' => $financial
+        ], 200);
+    }
+
+    public function deletePersonalFinance($id)
+    {
+        $financial = PersonalFinance::find($id);
+        if(!$financial){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Transaksi tidak ditemukan'
+            ], 404);
+        }
+
+        $financial->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Transaksi berhasil dihapus'
+        ], 200);
+    }
+
     public function getRecapToday(Request $request){
         $today = $request->date != null ? $request->date : date('Y-m-d');
         $finance = PersonalFinance::select('name', 'amount', 'type')
